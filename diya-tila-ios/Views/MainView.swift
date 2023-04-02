@@ -16,8 +16,8 @@ struct MainView: View {
             if sessionStore.isLoading {
                 ProgressView("Loading...")
             } else {
-                if let user = sessionStore.session, sessionStore.isLoggedIn {
-                    Text("Name: " + (user.fullName ?? ""))
+                if sessionStore.isLoggedIn {
+                    ProfileView(sessionStore: sessionStore)
                     LogoutView(sessionStore: sessionStore)
                 } else {
                     AuthView(sessionStore: sessionStore)

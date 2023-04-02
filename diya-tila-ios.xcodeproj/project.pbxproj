@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B55DBF329D99C91007B0BEB /* ProfilePhotoURLLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B55DBF229D99C91007B0BEB /* ProfilePhotoURLLoading.swift */; };
+		4B55DBF629D9A702007B0BEB /* FirebaseStorageDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B55DBF529D9A702007B0BEB /* FirebaseStorageDataProvider.swift */; };
+		4B55DBFA29D9AA26007B0BEB /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B55DBF929D9AA26007B0BEB /* ImagePicker.swift */; };
+		4B55DBFD29D9D116007B0BEB /* ProfilePicture.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B55DBFC29D9D116007B0BEB /* ProfilePicture.json */; };
+		4B55DBFF29D9D184007B0BEB /* LottieAnimationWithFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B55DBFE29D9D184007B0BEB /* LottieAnimationWithFile.swift */; };
+		4B55DC0129D9E965007B0BEB /* GreenAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B55DC0029D9E908007B0BEB /* GreenAnimation.json */; };
+		4B55DC0329D9F25E007B0BEB /* UserDataAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B55DC0229D9F25E007B0BEB /* UserDataAuthProvider.swift */; };
 		4BA7CB0029D77D1800A954A7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA7CAFF29D77D1800A954A7 /* User.swift */; };
 		4BA7CB0829D7834800A954A7 /* UserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA7CB0729D7834800A954A7 /* UserDataProvider.swift */; };
 		4BAEDDB729D6C7E90032ECB8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 4BAEDDB629D6C7E90032ECB8 /* FirebaseAnalytics */; };
@@ -34,6 +41,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4B55DBF229D99C91007B0BEB /* ProfilePhotoURLLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotoURLLoading.swift; sourceTree = "<group>"; };
+		4B55DBF529D9A702007B0BEB /* FirebaseStorageDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageDataProvider.swift; sourceTree = "<group>"; };
+		4B55DBF929D9AA26007B0BEB /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		4B55DBFC29D9D116007B0BEB /* ProfilePicture.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ProfilePicture.json; sourceTree = "<group>"; };
+		4B55DBFE29D9D184007B0BEB /* LottieAnimationWithFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieAnimationWithFile.swift; sourceTree = "<group>"; };
+		4B55DC0029D9E908007B0BEB /* GreenAnimation.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = GreenAnimation.json; sourceTree = "<group>"; };
+		4B55DC0229D9F25E007B0BEB /* UserDataAuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataAuthProvider.swift; sourceTree = "<group>"; };
 		4BA7CAFF29D77D1800A954A7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4BA7CB0729D7834800A954A7 /* UserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataProvider.swift; sourceTree = "<group>"; };
 		4BAEDDC229D6C8CE0032ECB8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -73,9 +87,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B55DBF429D9A6E6007B0BEB /* FirebaseStorage */ = {
+			isa = PBXGroup;
+			children = (
+				4B55DBF529D9A702007B0BEB /* FirebaseStorageDataProvider.swift */,
+			);
+			path = FirebaseStorage;
+			sourceTree = "<group>";
+		};
+		4B55DBFB29D9D0DE007B0BEB /* LottieFiles */ = {
+			isa = PBXGroup;
+			children = (
+				4B55DBFC29D9D116007B0BEB /* ProfilePicture.json */,
+				4B55DC0029D9E908007B0BEB /* GreenAnimation.json */,
+			);
+			path = LottieFiles;
+			sourceTree = "<group>";
+		};
 		4BA7CB0129D77D1C00A954A7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4B55DBF429D9A6E6007B0BEB /* FirebaseStorage */,
 				4BA7CB0229D77DD400A954A7 /* User */,
 			);
 			path = Models;
@@ -86,6 +118,7 @@
 			children = (
 				4BA7CAFF29D77D1800A954A7 /* User.swift */,
 				4BA7CB0729D7834800A954A7 /* UserDataProvider.swift */,
+				4B55DC0229D9F25E007B0BEB /* UserDataAuthProvider.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -93,6 +126,9 @@
 		4BA7CB0929D7BDD000A954A7 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				4B55DBF929D9AA26007B0BEB /* ImagePicker.swift */,
+				4B55DBFE29D9D184007B0BEB /* LottieAnimationWithFile.swift */,
+				4B55DBF229D99C91007B0BEB /* ProfilePhotoURLLoading.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -162,6 +198,7 @@
 		4BD905DD29D6AC23009FE5E5 /* diya-tila-ios */ = {
 			isa = PBXGroup;
 			children = (
+				4B55DBFB29D9D0DE007B0BEB /* LottieFiles */,
 				4BD905E429D6AC23009FE5E5 /* Preview Content */,
 				4BD905E229D6AC23009FE5E5 /* Assets.xcassets */,
 				4BA7CB0929D7BDD000A954A7 /* Components */,
@@ -258,6 +295,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B55DC0129D9E965007B0BEB /* GreenAnimation.json in Resources */,
+				4B55DBFD29D9D116007B0BEB /* ProfilePicture.json in Resources */,
 				4BD905E629D6AC23009FE5E5 /* Preview Assets.xcassets in Resources */,
 				4BD905E329D6AC23009FE5E5 /* Assets.xcassets in Resources */,
 				4BD905ED29D6B6ED009FE5E5 /* GoogleService-Info.plist in Resources */,
@@ -273,14 +312,19 @@
 			files = (
 				4BAEDDC329D6C8CE0032ECB8 /* LoginView.swift in Sources */,
 				4BAEDDD929D71DF80032ECB8 /* SignupView.swift in Sources */,
+				4B55DC0329D9F25E007B0BEB /* UserDataAuthProvider.swift in Sources */,
+				4B55DBFF29D9D184007B0BEB /* LottieAnimationWithFile.swift in Sources */,
 				4BAEDDCA29D6CF4C0032ECB8 /* SessionStore.swift in Sources */,
 				4BAEDDC629D6C9020032ECB8 /* MainView.swift in Sources */,
 				4BD905E129D6AC23009FE5E5 /* ContentView.swift in Sources */,
 				4BAEDDD729D70F100032ECB8 /* ProfileVIew.swift in Sources */,
 				4BAEDDCD29D6CFCF0032ECB8 /* LogoutView.swift in Sources */,
+				4B55DBF629D9A702007B0BEB /* FirebaseStorageDataProvider.swift in Sources */,
 				4BA7CB0829D7834800A954A7 /* UserDataProvider.swift in Sources */,
+				4B55DBF329D99C91007B0BEB /* ProfilePhotoURLLoading.swift in Sources */,
 				4BAEDDE429D737E80032ECB8 /* OAuthSignInWithGoogleButton.swift in Sources */,
 				4BAEDDD429D706EF0032ECB8 /* AuthView.swift in Sources */,
+				4B55DBFA29D9AA26007B0BEB /* ImagePicker.swift in Sources */,
 				4BA7CB0029D77D1800A954A7 /* User.swift in Sources */,
 				4BD905DF29D6AC23009FE5E5 /* diya_tila_iosApp.swift in Sources */,
 			);

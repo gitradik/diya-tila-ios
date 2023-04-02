@@ -7,8 +7,31 @@
 
 import SwiftUI
 
-struct ProfileVIew: View {
+struct ProfileView: View {
+    let sessionStore: SessionStore
+    
     var body: some View {
-        Text("ProfileVIew")
+        VStack {
+            if let user = sessionStore.session {
+                ProfilePhotoURLLoading(imageURL: user.photoURL)
+                
+                Divider().scenePadding(.top)
+                
+                if let fullName = user.fullName {
+                    Text(fullName)
+                        .font(.largeTitle)
+                        .fontWeight(.medium)
+                }
+                
+                Spacer()
+            }
+            
+            
+//            InfoView(icon: "envelope", label: "Email", value: "john.doe@gmail.com")
+//            InfoView(icon: "phone", label: "Phone", value: "(123) 456-7890")
+//            InfoView(icon: "house", label: "Address", value: "123 Main Street, Anytown, USA")
+            
+//            Spacer()
+        }.scenePadding(.top)
     }
 }

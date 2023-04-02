@@ -25,8 +25,11 @@ struct AuthView: View {
                         sessionStore.googleLogin()
                     }
                     Spacer()
-                    NavigationLink(destination: SignupView { name, email, passwd in
-                        sessionStore.register(name: name, email: email, passwd: passwd)
+                    NavigationLink(destination: SignupView() { name, email, passwd, image in
+                        if let image = image {
+                            sessionStore.register(name: name, email: email, passwd: passwd, uiImage: image)
+                        }
+                       
                     }) {
                         Text("Register")
                     }

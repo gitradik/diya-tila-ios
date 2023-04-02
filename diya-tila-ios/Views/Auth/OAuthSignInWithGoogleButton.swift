@@ -15,7 +15,7 @@ struct OAuthSignInWithGoogleButton: View {
     var body: some View {
         Button(action: action) {
             HStack {
-                Image("google")
+                Image("Google")
                     .resizable()
                     .frame(width: 34, height: 34)
                 Text("Sign in with Google")

@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var sessionStore = SessionStore(userDataProvider: UserDataProvider())
+    @StateObject var sessionStore = SessionStore(userDataAuthProvider: UserDataAuthProvider(), userDataProvider: UserDataProvider(), fbSrotageDataProvider: FirebaseStorageDataProvider())
     
     var body: some View {
         MainView()
             .environmentObject(sessionStore)
+            
         
     }
 }

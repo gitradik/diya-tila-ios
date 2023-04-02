@@ -13,11 +13,16 @@ class SessionStore : ObservableObject {
     @Published var isLoading = false
     var isLoggedIn: Bool { session != nil }
     
+    private let userDataAuthProvider: UserDataAuthProvider
     private let userDataProvider: UserDataProvider
+    private let fbSrotageDataProvider: FirebaseStorageDataProvider
     private var listener: AuthStateDidChangeListenerHandle?
     
-    init(userDataProvider: UserDataProvider) {
+    init(userDataAuthProvider: UserDataAuthProvider, userDataProvider: UserDataProvider, fbSrotageDataProvider: FirebaseStorageDataProvider) {
+        self.userDataAuthProvider = userDataAuthProvider
         self.userDataProvider = userDataProvider
+        self.fbSrotageDataProvider = fbSrotageDataProvider
+        
         listener = Auth.auth().addStateDidChangeListener { (auth, user) in
             if let user = user {
                 self.session = User(firebaseUser: user)
@@ -27,36 +32,55 @@ class SessionStore : ObservableObject {
         }
     }
     
+    func update(user: User) {
+        self.isLoading = true
+        userDataProvider.update(user: user) { error in
+            self.isLoading = false
+        }
+    }
+    
     func login(email: String, passwd: String) {
         self.isLoading = true
-        userDataProvider.signIn(email, passwd) { result, error in
+        userDataAuthProvider.signIn(email, passwd) { result, error in
             self.isLoading = false
         }
     }
     
     func googleLogin() {
         self.isLoading = true
-        userDataProvider.signInWithGoogle { result, error in
+        userDataAuthProvider.signInWithGoogle { result, error in
             self.isLoading = false
         }
     }
     
-    func register(name: String, email: String, passwd: String) {
+    func register(name: String, email: String, passwd: String, uiImage: UIImage) {
         self.isLoading = true
-        userDataProvider.register(name, email, passwd) { registerResult, error in
-            if registerResult != nil {
-                self.userDataProvider.update(fullName: name) { updateResult, error in
-                    self.session?.fullName = updateResult?.displayName
-                    self.isLoading = false
+        let imageName = uiImage.accessibilityLabel ?? "Unknown"
+        let imagePath = "profile_images/\(imageName).jpg"
+        
+        fbSrotageDataProvider.uploadImage(uiImage, path: imagePath) { result in
+            switch result {
+            case .success(let url):
+                self.userDataAuthProvider.register(email, passwd) { registerResult, error in
+                    if registerResult != nil {
+                        self.userDataAuthProvider.updatePhotoURL(url: URL(string: url)!) { updateResult, error in
+                            self.session?.photoURL = updateResult?.photoURL
+                            self.userDataAuthProvider.updateDisplayName(fullName: name) { updateResult, error in
+                                self.session?.fullName = updateResult?.displayName
+                                self.isLoading = false
+                            }
+                        }
+                    }
                 }
-            } else {
+            case .failure(let error):
+                print("Error uploading image: \(error)")
                 self.isLoading = false
             }
         }
     }
     
     func signOut() {
-        userDataProvider.signOut()
+        userDataAuthProvider.signOut()
     }
     
     deinit {
