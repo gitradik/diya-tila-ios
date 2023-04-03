@@ -10,28 +10,35 @@ import SwiftUI
 struct SignupView: View {
     let signUp: ((_ name: String, _ email: String, _ passwd: String, _ image: UIImage?) -> Void)?
     
+    @State var selectedImage: UIImage?
     @State var image: UIImage?
     @State var showingImagePicker = false
     @State private var name: String = ""
     @State private var passwd: String = ""
     @State private var email: String = ""
     
+    let photoSize = (width: CGFloat(200), height: CGFloat(200))
+    
     var body: some View {
         VStack {
             HStack {
-                if let image = image {
-                    NNImageCropAndScaleView(image: image, width: 200, height: 200)
-//                    Image(uiImage: image)
-//                        .resizable()
-//                        .scaledToFill()
-//                        .frame(width: 200, height: 200)
-//                        .overlay(Circle().stroke(Color.white, lineWidth: 2))
-//                        .clipShape(Circle())
-//                        .shadow(radius: 4)
-//                        .onAppear {
-//                            let imgClass = NNImageClassification(image: image)
-//                            print(imgClass.getClassification)
-//                        }
+                if let selectedImage = selectedImage {
+                    VStack {
+                        if let image = image {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFill()
+                                .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                                .clipShape(Circle())
+                                .shadow(radius: 4)
+                        } else {
+                            ProgressView()
+                        }
+                    }.frame(width: photoSize.width, height: photoSize.height).onAppear {
+                        NNImageCropAndScale(image: selectedImage, width: photoSize.width, height: photoSize.height).detectFace { result in
+                            self.image = try? result.get()
+                        }
+                    }
                 } else {
                     ZStack(alignment: .center) {
                         LottieAnimationWithFile(lottieFile: "GreenAnimation", loopMode: .repeat(2.0))
@@ -72,8 +79,10 @@ struct SignupView: View {
         .scenePadding(.top)
         .scenePadding(.horizontal)
         .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(image: $image)
+            ImagePicker(image: $selectedImage)
         }
+        
         Spacer()
     }
 }
+
