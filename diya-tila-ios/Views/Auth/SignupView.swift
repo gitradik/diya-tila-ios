@@ -11,13 +11,14 @@ struct SignupView: View {
     let signUp: ((_ name: String, _ email: String, _ passwd: String, _ image: UIImage?) -> Void)?
     
     @State var selectedImage: UIImage?
-    @State var image: UIImage?
     @State var showingImagePicker = false
+    
     @State private var name: String = ""
     @State private var passwd: String = ""
     @State private var email: String = ""
+    @State var image: UIImage?
     
-    let photoSize = (width: CGFloat(200), height: CGFloat(200))
+    let photoSize = (width: CGFloat(250), height: CGFloat(250))
     
     var body: some View {
         VStack {
@@ -62,7 +63,13 @@ struct SignupView: View {
                 .textFieldStyle(.roundedBorder)
             SecureField("Password", text: $passwd)
                 .textFieldStyle(.roundedBorder)
+            
+            // Button for registration
             Button(action: {
+                guard !name.isEmpty && !email.isEmpty && !passwd.isEmpty && image != nil else {
+                    return
+                }
+                
                 if let fn = signUp {
                     fn(name, email, passwd, image)
                 }
