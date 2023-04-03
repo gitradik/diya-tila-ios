@@ -23,11 +23,11 @@ import Vision
 //let rect = CGRect(x: x, y: y, width: scaledWidth, height: scaledHeight)
 //let croppedImage = ciImage.cropped(to: rect)
 
-struct NNScaledImageView: View {
+struct NNImageCropAndScaleView: View {
     let image: UIImage
     let width: CGFloat
     let height: CGFloat
-    let zoomOutFactor: CGFloat = 1.2
+    let zoomOutFactor: CGFloat = 0.2
     
     @State private var croppedImage: UIImage?
     
@@ -77,7 +77,6 @@ struct NNScaledImageView: View {
         }
         
         func cropImage(faceBoundingBox: VNFaceObservation, scaleX: CGFloat, scaleY: CGFloat) {
-            let zoomOutFactor: CGFloat = 0.2 // Adjust this value to change the zoom factor
             let cropRect = CGRect(x: (faceBoundingBox.boundingBox.origin.x - zoomOutFactor / 2.0) * image.size.width,
                                   y: ((1 - faceBoundingBox.boundingBox.origin.y - faceBoundingBox.boundingBox.height) - zoomOutFactor / 2.0) * image.size.height,
                                   width: (faceBoundingBox.boundingBox.width + zoomOutFactor) * image.size.width,
@@ -87,7 +86,6 @@ struct NNScaledImageView: View {
             guard let cgImage = image.cgImage?.cropping(to: cropRect) else { return }
             
             let croppedImage = UIImage(cgImage: cgImage)
-//            let scaledImage = croppedImage.scaledImage(toSize: CGSize(width: width - 50, height: height - 50))
             
             DispatchQueue.main.async {
                 self.croppedImage = croppedImage

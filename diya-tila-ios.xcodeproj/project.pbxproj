@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4B213A4F29DB159C004E8ED3 /* NNImageClassification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B213A4E29DB159C004E8ED3 /* NNImageClassification.swift */; };
-		4B213A5129DB19B6004E8ED3 /* NNScaleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B213A5029DB19B6004E8ED3 /* NNScaleImageView.swift */; };
+		4B213A5129DB19B6004E8ED3 /* NNImageCropAndScaleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B213A5029DB19B6004E8ED3 /* NNImageCropAndScaleView.swift */; };
 		4B42197F29DB59B2004E84D9 /* SqueezeNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4B42198129DB59B2004E84D9 /* SqueezeNet.mlmodel */; };
 		4B55DBF329D99C91007B0BEB /* ProfilePhotoURLLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B55DBF229D99C91007B0BEB /* ProfilePhotoURLLoading.swift */; };
 		4B55DBF629D9A702007B0BEB /* FirebaseStorageDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B55DBF529D9A702007B0BEB /* FirebaseStorageDataProvider.swift */; };
@@ -46,7 +46,7 @@
 
 /* Begin PBXFileReference section */
 		4B213A4E29DB159C004E8ED3 /* NNImageClassification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NNImageClassification.swift; sourceTree = "<group>"; };
-		4B213A5029DB19B6004E8ED3 /* NNScaleImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NNScaleImageView.swift; sourceTree = "<group>"; };
+		4B213A5029DB19B6004E8ED3 /* NNImageCropAndScaleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NNImageCropAndScaleView.swift; sourceTree = "<group>"; };
 		4B42198029DB59B2004E84D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = Base; path = Base.lproj/SqueezeNet.mlmodel; sourceTree = "<group>"; };
 		4B55DBF229D99C91007B0BEB /* ProfilePhotoURLLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePhotoURLLoading.swift; sourceTree = "<group>"; };
 		4B55DBF529D9A702007B0BEB /* FirebaseStorageDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseStorageDataProvider.swift; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 			children = (
 				4B42198129DB59B2004E84D9 /* SqueezeNet.mlmodel */,
 				4B213A4E29DB159C004E8ED3 /* NNImageClassification.swift */,
-				4B213A5029DB19B6004E8ED3 /* NNScaleImageView.swift */,
+				4B213A5029DB19B6004E8ED3 /* NNImageCropAndScaleView.swift */,
 			);
 			path = NN;
 			sourceTree = "<group>";
@@ -355,7 +355,7 @@
 				4B55DBF329D99C91007B0BEB /* ProfilePhotoURLLoading.swift in Sources */,
 				4BAEDDE429D737E80032ECB8 /* OAuthSignInWithGoogleButton.swift in Sources */,
 				4BAEDDD429D706EF0032ECB8 /* AuthView.swift in Sources */,
-				4B213A5129DB19B6004E8ED3 /* NNScaleImageView.swift in Sources */,
+				4B213A5129DB19B6004E8ED3 /* NNImageCropAndScaleView.swift in Sources */,
 				4B55DBFA29D9AA26007B0BEB /* ImagePicker.swift in Sources */,
 				4BA7CB0029D77D1800A954A7 /* User.swift in Sources */,
 				4BD905DF29D6AC23009FE5E5 /* diya_tila_iosApp.swift in Sources */,
