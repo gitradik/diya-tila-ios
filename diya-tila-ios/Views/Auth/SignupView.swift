@@ -20,13 +20,7 @@ struct SignupView: View {
         VStack {
             HStack {
                 if let image = image {
-                    Image(uiImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: 200, height: 200)
-                        .overlay(Circle().stroke(Color.white, lineWidth: 2))
-                        .clipShape(Circle())
-                        .shadow(radius: 4)
+                    NNScaledImageView(image: image, width: 200, height: 200)
                 } else {
                     ZStack(alignment: .center) {
                         LottieAnimationWithFile(lottieFile: "GreenAnimation", loopMode: .repeat(2.0))
@@ -69,12 +63,6 @@ struct SignupView: View {
         .sheet(isPresented: $showingImagePicker) {
             ImagePicker(image: $image)
         }
-        
-        //        .onChange(of: image, perform: { value in
-        //            if let image = image {
-        //                firebaseStorageStore.uploadImage(image)
-        //            }
-        //        })
         Spacer()
     }
 }
