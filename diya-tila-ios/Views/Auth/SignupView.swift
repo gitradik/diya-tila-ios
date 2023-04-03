@@ -21,6 +21,18 @@ struct SignupView: View {
             HStack {
                 if let image = image {
                     NNScaledImageView(image: image, width: 200, height: 200)
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+//                        .scaleEffect(1.5)
+                        .frame(width: 200, height: 200)
+                        .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                        .clipShape(Circle())
+                        .shadow(radius: 4)
+                        .onAppear {
+                            let imgClass = NNImageClassification(image: image)
+                            print(imgClass.getClassification)
+                        }
                 } else {
                     ZStack(alignment: .center) {
                         LottieAnimationWithFile(lottieFile: "GreenAnimation", loopMode: .repeat(2.0))
