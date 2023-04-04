@@ -9,13 +9,4 @@ import Firebase
 import FirebaseDatabase
 
 class UserDataProvider: ObservableObject {
-    let dataRef: DatabaseReference = DatabaseReference()
-    
-    func update(user: User, completion: @escaping (Error?) -> Void) {
-        self.dataRef.child("users").child(user.id).setValue([
-            "photoURL": user.photoURL
-        ]) { error, _ in
-            completion(error)
-        }
-    }
 }

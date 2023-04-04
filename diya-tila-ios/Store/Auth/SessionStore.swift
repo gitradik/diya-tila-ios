@@ -14,13 +14,11 @@ class SessionStore : ObservableObject {
     var isLoggedIn: Bool { session != nil }
     
     private let userDataAuthProvider: UserDataAuthProvider
-    private let userDataProvider: UserDataProvider
     private let fbSrotageDataProvider: FirebaseStorageDataProvider
     private var listener: AuthStateDidChangeListenerHandle?
     
-    init(userDataAuthProvider: UserDataAuthProvider, userDataProvider: UserDataProvider, fbSrotageDataProvider: FirebaseStorageDataProvider) {
+    init(userDataAuthProvider: UserDataAuthProvider, fbSrotageDataProvider: FirebaseStorageDataProvider) {
         self.userDataAuthProvider = userDataAuthProvider
-        self.userDataProvider = userDataProvider
         self.fbSrotageDataProvider = fbSrotageDataProvider
         
         listener = Auth.auth().addStateDidChangeListener { (auth, user) in
@@ -29,13 +27,6 @@ class SessionStore : ObservableObject {
             } else {
                 self.session = nil
             }
-        }
-    }
-    
-    func update(user: User) {
-        self.isLoading = true
-        userDataProvider.update(user: user) { error in
-            self.isLoading = false
         }
     }
     

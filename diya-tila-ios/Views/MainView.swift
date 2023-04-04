@@ -10,6 +10,7 @@ import SwiftUI
 
 struct MainView: View {
     @EnvironmentObject var sessionStore: SessionStore
+    let fbDataBaseProvider = FirebaseDataBaseProvider()
     
     var body: some View {
         VStack {
@@ -17,7 +18,7 @@ struct MainView: View {
                 ProgressView("Loading...")
             } else {
                 if sessionStore.isLoggedIn {
-                    ProfileView(sessionStore: sessionStore)
+                    ProfileView(sessionStore: sessionStore, fbDataBaseProvider: fbDataBaseProvider)
                     LogoutView(sessionStore: sessionStore)
                 } else {
                     AuthView(sessionStore: sessionStore)
