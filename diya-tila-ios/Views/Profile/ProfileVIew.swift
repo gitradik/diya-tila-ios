@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     let sessionStore: SessionStore
+    let fbDataBaseProvider: FirebaseDataBaseProvider
     
     var body: some View {
         VStack {
@@ -25,13 +26,16 @@ struct ProfileView: View {
                 
                 Spacer()
             }
-            
-            
-//            InfoView(icon: "envelope", label: "Email", value: "john.doe@gmail.com")
-//            InfoView(icon: "phone", label: "Phone", value: "(123) 456-7890")
-//            InfoView(icon: "house", label: "Address", value: "123 Main Street, Anytown, USA")
-            
-//            Spacer()
         }.scenePadding(.top)
+            .onAppear {
+                // MARK: need take to some other place which start User register 
+//                if let user = sessionStore.session,
+//                   let id = sessionStore.session?.id {
+//                    fbDataBaseProvider.addUserUniqueName(
+//                        currentUserID: id,
+//                        user: user
+//                    )
+//                }
+            }
     }
 }

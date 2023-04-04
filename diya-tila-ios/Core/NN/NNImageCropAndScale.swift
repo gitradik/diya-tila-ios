@@ -5,13 +5,6 @@
 //  Created by Rodion Malakhov on 03.04.2023.
 //
 
-//
-//  ImageClassification.swift
-//  diya-tila-ios
-//
-//  Created by Rodion Malakhov on 03.04.2023.
-//
-
 import SwiftUI
 import Vision
 

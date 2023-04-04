@@ -18,7 +18,7 @@ struct SignupView: View {
     @State private var email: String = ""
     @State var image: UIImage?
     
-    let photoSize = (width: CGFloat(250), height: CGFloat(250))
+    let photoSize = (width: CGFloat(170), height: CGFloat(170))
     
     var body: some View {
         VStack {
@@ -35,7 +35,8 @@ struct SignupView: View {
                         } else {
                             ProgressView()
                         }
-                    }.frame(width: photoSize.width, height: photoSize.height).onAppear {
+                    }.frame(width: photoSize.width, height: photoSize.height)
+                    .onAppear {
                         NNImageCropAndScale(image: selectedImage, width: photoSize.width, height: photoSize.height).detectFace { result in
                             self.image = try? result.get()
                         }
@@ -50,7 +51,7 @@ struct SignupView: View {
                             .foregroundColor(.cyan)
                             .multilineTextAlignment(.center)
                     }
-                    .frame(width: 200, height: 200)
+                    .frame(width: photoSize.width, height: photoSize.height)
                     .onTapGesture {
                         self.showingImagePicker = true
                     }
