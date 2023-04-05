@@ -7,7 +7,7 @@
 
 import SwiftUI
 // #4cfeb1
-struct ProfilePhotoURLLoading: View {
+struct ProfilePhotoURLLoadingView: View {
     let imageURL: URL!
     @State private var isLoadingImage = true
     
