@@ -36,14 +36,12 @@ class SessionStore : ObservableObject {
         }
     }
     
-    // MARK: When registration, addStateDidChangeListener start before (self.session = resultUpdatedUser) hear
     func googleLogin() {
         self.removeStateDidChangeListener()
         self.isLoading = true
         
         userDataAuthProvider.signInWithGoogle { resultFbUser, error in
             guard let fbUser = resultFbUser else {
-                self.initStateDidChangeListener()
                 self.isLoading = false
                 return
             }
@@ -51,7 +49,6 @@ class SessionStore : ObservableObject {
             let newUser = User(firebaseUser: fbUser)
             self.userDataProvider.uniqueUsernameAlreadyExist(user: newUser) { result, error in
                 guard error == nil else {
-                    self.initStateDidChangeListener()
                     self.isLoading = false
                     return
                 }
@@ -60,15 +57,13 @@ class SessionStore : ObservableObject {
                     self.userDataProvider.getUserDetais(user: newUser) { resultUserDetails, error in
                         guard error == nil else {
                             self.session = nil
-                            self.initStateDidChangeListener()
                             self.isLoading = false
                             return
                         }
                         
                         let updatedUser = User(
-                            from: combineTwoDictionaries(
-                                dict1: newUser.toDictionary(),
-                                dict2: ["userDetails": resultUserDetails as Any]
+                            from: combineDictionaries(
+                                [newUser.toDictionary(), ["userDetails": resultUserDetails as Any]]
                             )
                         )
                         self.session = updatedUser
@@ -77,7 +72,7 @@ class SessionStore : ObservableObject {
                     }
                     return
                 }
-
+                
                 self.addUserUniqueName(user: newUser) { resultUpdatedUser, error in
                     self.session = resultUpdatedUser
                     self.initStateDidChangeListener()
@@ -87,7 +82,6 @@ class SessionStore : ObservableObject {
         }
     }
     
-    // MARK: addStateDidChangeListener start before (self.session = resultUpdatedUser) hear
     func register(name: String, email: String, passwd: String, uiImage: UIImage) {
         guard let path = environment.plistDictionary?["PROFILE_IMAGES_PATH"] as? String else {
             fatalError("Wrong environment variable value: \"PROFILE_IMAGES_PATH\"")
@@ -140,9 +134,8 @@ class SessionStore : ObservableObject {
             
             let userDictionary = user.toDictionary()
             let updatedUser = User(
-                from: combineTwoDictionaries(
-                    dict1: userDictionary,
-                    dict2: ["userDetails": ["uniqueUsername": result]]
+                from: combineDictionaries(
+                    [userDictionary, ["userDetails": ["uniqueUsername": result]]]
                 )
             )
             
@@ -167,9 +160,8 @@ class SessionStore : ObservableObject {
                 }
                 
                 let updatedUser = User(
-                    from: combineTwoDictionaries(
-                        dict1: newUser.toDictionary(),
-                        dict2: ["userDetails": resultUserDetails as Any]
+                    from: combineDictionaries(
+                        [newUser.toDictionary(), ["userDetails": resultUserDetails as Any]]
                     )
                 )
                 self.session = updatedUser
