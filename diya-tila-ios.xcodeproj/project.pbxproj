@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4B1E8AEC29DCC6E200F74C71 /* EnvironmentFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1E8AEB29DCC6E200F74C71 /* EnvironmentFile.swift */; };
-		4B1E8AF029DCF41600F74C71 /* CombineTwoDictionaries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1E8AEF29DCF41600F74C71 /* CombineTwoDictionaries.swift */; };
+		4B1E8AF029DCF41600F74C71 /* CombineDictionaries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B1E8AEF29DCF41600F74C71 /* CombineDictionaries.swift */; };
 		4B213A4F29DB159C004E8ED3 /* NNImageClassification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B213A4E29DB159C004E8ED3 /* NNImageClassification.swift */; };
 		4B213A5129DB19B6004E8ED3 /* NNImageCropAndScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B213A5029DB19B6004E8ED3 /* NNImageCropAndScale.swift */; };
 		4B42197F29DB59B2004E84D9 /* SqueezeNet.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4B42198129DB59B2004E84D9 /* SqueezeNet.mlmodel */; };
@@ -50,7 +50,7 @@
 
 /* Begin PBXFileReference section */
 		4B1E8AEB29DCC6E200F74C71 /* EnvironmentFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentFile.swift; sourceTree = "<group>"; };
-		4B1E8AEF29DCF41600F74C71 /* CombineTwoDictionaries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineTwoDictionaries.swift; sourceTree = "<group>"; };
+		4B1E8AEF29DCF41600F74C71 /* CombineDictionaries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineDictionaries.swift; sourceTree = "<group>"; };
 		4B213A4E29DB159C004E8ED3 /* NNImageClassification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NNImageClassification.swift; sourceTree = "<group>"; };
 		4B213A5029DB19B6004E8ED3 /* NNImageCropAndScale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NNImageCropAndScale.swift; sourceTree = "<group>"; };
 		4B42198029DB59B2004E84D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = Base; path = Base.lproj/SqueezeNet.mlmodel; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 		4B1E8AEE29DCF3ED00F74C71 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				4B1E8AEF29DCF41600F74C71 /* CombineTwoDictionaries.swift */,
+				4B1E8AEF29DCF41600F74C71 /* CombineDictionaries.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -370,7 +370,7 @@
 				4BD905E129D6AC23009FE5E5 /* ContentView.swift in Sources */,
 				4BAEDDD729D70F100032ECB8 /* ProfileVIew.swift in Sources */,
 				4B42197F29DB59B2004E84D9 /* SqueezeNet.mlmodel in Sources */,
-				4B1E8AF029DCF41600F74C71 /* CombineTwoDictionaries.swift in Sources */,
+				4B1E8AF029DCF41600F74C71 /* CombineDictionaries.swift in Sources */,
 				4BAEDDCD29D6CFCF0032ECB8 /* LogoutView.swift in Sources */,
 				4B55DBF629D9A702007B0BEB /* FBStorageDataProvider.swift in Sources */,
 				4BA7CB0829D7834800A954A7 /* UserDataProvider.swift in Sources */,
