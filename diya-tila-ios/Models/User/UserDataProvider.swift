@@ -25,14 +25,14 @@ class UserDataProvider: FBDatabaseProvider {
         }
     }
     
-    func uniqueUsernameAlreadyExist(user: User, completion: @escaping (Bool?, Error?) -> Void) {
+    func uniqueUsernameAlreadyExist(user: User, completion: @escaping (Bool, Error?) -> Void) {
         if let id = user.id {
             let ref = self.db.reference(withPath: FBDatabaseTables.UserDetails.rawValue)
             ref.child(id).observeSingleEvent(of: .value, with: { snapshot in
                 completion(snapshot.exists(), nil)
             })
         } else {
-            completion(nil, nil)
+            completion(false, nil)
         }
     }
     

@@ -12,13 +12,15 @@ struct ProfileView: View {
     
     var body: some View {
         VStack {
-            if let user = sessionStore.session {
+            if let user = sessionStore.session, let userDetails = sessionStore.session?.userDetails {
                 if let fullName = user.fullName {
+                    Text(fullName)
                     DropdownView()
                 }
                 
-                ProfilePhotoURLLoadingView(imageURL: user.photoURL).padding(.bottom)
-                if let uniqueUsername = user.userDetails?.uniqueUsername {
+                ProfilePhotoURLLoadingView(imageURL: user.photoURL)
+                    .padding(.bottom)
+                if let uniqueUsername = userDetails.uniqueUsername {
                     Text("@" + uniqueUsername)
                         .font(.title3)
                         .fontWeight(.light)
