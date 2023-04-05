@@ -11,7 +11,7 @@ struct UserDetails {
     var uniqueUsername: String?
     
     init(from dict: [String: Any]) {
-        self.uniqueUsername = (dict["userDetails"] as? [String: Any])!["uniqueUsername"] as? String ?? nil
+        self.uniqueUsername = (dict["userDetails"] as? [String: Any])?["uniqueUsername"] as? String ?? nil
     }
     
     func toDictionary() -> [String: Any] {

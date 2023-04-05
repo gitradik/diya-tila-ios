@@ -29,6 +29,7 @@ struct User {
         self.userDetails = UserDetails(from: dict)
     }
     
+    
     func toDictionary() -> [String: Any] {
         return [
             "id": id as Any,

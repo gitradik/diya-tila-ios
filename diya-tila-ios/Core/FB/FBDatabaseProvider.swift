@@ -21,6 +21,11 @@ class FBDatabaseProvider: ObservableObject {
         db = Database.database(url: url)
     }
     
+    enum FBDatabaseTables: String {
+        case Usernames = "Usernames"
+        case UserDetails = "UsersDetails"
+    }
+    
     enum FBDatabaseUpdates {
         case Usernames(String)
         case UserDetails(String, String)
