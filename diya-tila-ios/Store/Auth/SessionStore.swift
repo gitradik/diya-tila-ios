@@ -13,11 +13,15 @@ class SessionStore : ObservableObject {
     @Published var isLoading = false
     var isLoggedIn: Bool { session != nil }
     
+    private let userDataProvider: UserDataProvider
     private let userDataAuthProvider: UserDataAuthProvider
-    private let fbSrotageDataProvider: FirebaseStorageDataProvider
+    private let fbSrotageDataProvider: FBStorageDataProvider
     private var listener: AuthStateDidChangeListenerHandle?
     
-    init(userDataAuthProvider: UserDataAuthProvider, fbSrotageDataProvider: FirebaseStorageDataProvider) {
+    init(userDataProvider: UserDataProvider,
+         userDataAuthProvider: UserDataAuthProvider,
+         fbSrotageDataProvider: FBStorageDataProvider) {
+        self.userDataProvider = userDataProvider
         self.userDataAuthProvider = userDataAuthProvider
         self.fbSrotageDataProvider = fbSrotageDataProvider
         
@@ -58,7 +62,19 @@ class SessionStore : ObservableObject {
                             self.session?.photoURL = updateResult?.photoURL
                             self.userDataAuthProvider.updateDisplayName(fullName: name) { updateResult, error in
                                 self.session?.fullName = updateResult?.displayName
-                                self.isLoading = false
+                                
+                                self.userDataProvider.addUserUniqueName(user: self.session!) { result, error in
+                                    if let userDictionary = self.session?.toDictionary() {
+                                        let updatedUser = User(
+                                            from: combineTwoDictionaries(
+                                                dict1: userDictionary,
+                                                dict2: ["userDetails": ["uniqueUsername": result]]
+                                            )
+                                        )
+                                        self.session = updatedUser
+                                    }
+                                    self.isLoading = false
+                                }
                             }
                         }
                     }

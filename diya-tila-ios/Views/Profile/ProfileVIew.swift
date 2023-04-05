@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ProfileView: View {
     let sessionStore: SessionStore
-    let fbDataBaseProvider: FirebaseDataBaseProvider
     
     var body: some View {
         VStack {
@@ -24,18 +23,14 @@ struct ProfileView: View {
                         .fontWeight(.medium)
                 }
                 
+                if let uniqueUsername = user.userDetails?.uniqueUsername {
+                    Text("@" + uniqueUsername)
+                        .font(.title3)
+                        .fontWeight(.light)
+                }
+                
                 Spacer()
             }
         }.scenePadding(.top)
-            .onAppear {
-                // MARK: need take to some other place which start User register 
-//                if let user = sessionStore.session,
-//                   let id = sessionStore.session?.id {
-//                    fbDataBaseProvider.addUserUniqueName(
-//                        currentUserID: id,
-//                        user: user
-//                    )
-//                }
-            }
     }
 }
