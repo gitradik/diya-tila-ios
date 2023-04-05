@@ -137,13 +137,6 @@
 			path = NN;
 			sourceTree = "<group>";
 		};
-		4B55DBF429D9A6E6007B0BEB /* Firebase */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Firebase;
-			sourceTree = "<group>";
-		};
 		4B55DBFB29D9D0DE007B0BEB /* LottieFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,7 +149,6 @@
 		4BA7CB0129D77D1C00A954A7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				4B55DBF429D9A6E6007B0BEB /* Firebase */,
 				4BA7CB0229D77DD400A954A7 /* User */,
 			);
 			path = Models;

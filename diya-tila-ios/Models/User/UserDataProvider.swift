@@ -10,6 +10,32 @@ import FirebaseDatabase
 
 class UserDataProvider: FBDatabaseProvider {
     
+    func getUserDetais(user: User, completion: @escaping ([String: Any]?, Error?) -> Void) {
+        if let id = user.id {
+            let ref = self.db.reference(withPath: FBDatabaseTables.UserDetails.rawValue)
+            ref.child(id).getData { error, snapshot in
+                if let snap = snapshot {
+                    completion(snap.value! as? [String: Any], nil)
+                } else if let err = error {
+                    completion(nil, err)
+                } else {
+                    completion(nil, nil)
+                }
+            }
+        }
+    }
+    
+    func uniqueUsernameAlreadyExist(user: User, completion: @escaping (Bool?, Error?) -> Void) {
+        if let id = user.id {
+            let ref = self.db.reference(withPath: FBDatabaseTables.UserDetails.rawValue)
+            ref.child(id).observeSingleEvent(of: .value, with: { snapshot in
+                completion(snapshot.exists(), nil)
+            })
+        } else {
+            completion(nil, nil)
+        }
+    }
+    
     func addUserUniqueName(user: User, completion: @escaping (String?, Error?) -> Void) {
         if let fullName = user.fullName {
             DispatchQueue.global(qos: .userInitiated).async { [self] in
@@ -25,6 +51,8 @@ class UserDataProvider: FBDatabaseProvider {
                             completion(uniqueUsername, error)
                         } else if error != nil {
                             completion(nil, error)
+                        } else {
+                            completion(nil, nil)
                         }
                     }
                 }
@@ -34,7 +62,7 @@ class UserDataProvider: FBDatabaseProvider {
     
     // Define a function to generate a unique login name
     private func generateUniqueLoginName(_ loginName: String, completion: @escaping (String?, Error?) -> Void) {
-        let ref = self.db.reference(withPath: "Usernames")
+        let ref = self.db.reference(withPath: FBDatabaseTables.Usernames.rawValue)
         // Check if the login name is already in use
         var isFinish = false
         var count = 0
@@ -60,23 +88,20 @@ class UserDataProvider: FBDatabaseProvider {
         }
     }
     
-    
     private func checkUserNameAlreadyExist(dbRef: DatabaseReference, loginName: String, completion: @escaping(Bool) -> Void) {
         dbRef.child(loginName).observeSingleEvent(of: .value, with: { snapshot in
-            if snapshot.exists() {
-                completion(true)
-            }
-            else {
-                completion(false)
-            }
+            completion(snapshot.exists())
         })
     }
     
     private func generateNameFromFullname(_ fullName: String) -> String {
         let components = fullName.split(separator: " ")
-        let firstName = String(components.first ?? "")
-        let lastName = String(components.last ?? "")
-        let username = "\(firstName)\(lastName)"
+        
+        var username = ""
+        for str in components {
+            username += str
+        }
+        
         return username.lowercased()
     }
 }

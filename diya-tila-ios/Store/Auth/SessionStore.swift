@@ -26,10 +26,19 @@ class SessionStore : ObservableObject {
         self.fbSrotageDataProvider = fbSrotageDataProvider
         
         listener = Auth.auth().addStateDidChangeListener { (auth, user) in
-            if let user = user {
-                self.session = User(firebaseUser: user)
-            } else {
+            guard let user = user else {
                 self.session = nil
+                return
+            }
+            let newUser = User(firebaseUser: user)
+            userDataProvider.getUserDetais(user: newUser) { resultDictionary, error in
+                let updatedUser = User(
+                    from: combineTwoDictionaries(
+                        dict1: newUser.toDictionary(),
+                        dict2: ["userDetails": resultDictionary as Any]
+                    )
+                )
+                self.session = updatedUser
             }
         }
     }
@@ -44,7 +53,27 @@ class SessionStore : ObservableObject {
     func googleLogin() {
         self.isLoading = true
         userDataAuthProvider.signInWithGoogle { result, error in
-            self.isLoading = false
+            guard let user = result else {
+                self.isLoading = false
+                return
+            }
+            
+            let newUser = User(firebaseUser: user)
+            self.userDataProvider.uniqueUsernameAlreadyExist(user: newUser) { result, error in
+                guard error == nil else {
+                    self.isLoading = false
+                    return
+                }
+
+                if result! == true  {
+                    self.isLoading = false
+                    return
+                }
+
+                self.addUserUniqueName(user: newUser) { result, error in
+                    self.isLoading = false
+                }
+            }
         }
     }
     
@@ -57,22 +86,14 @@ class SessionStore : ObservableObject {
             switch result {
             case .success(let url):
                 self.userDataAuthProvider.register(email, passwd) { registerResult, error in
-                    if registerResult != nil {
+                    if let registerResult = registerResult {
+                        var newUser = User(firebaseUser: registerResult)
                         self.userDataAuthProvider.updatePhotoURL(url: URL(string: url)!) { updateResult, error in
-                            self.session?.photoURL = updateResult?.photoURL
+                            newUser.photoURL = updateResult?.photoURL
                             self.userDataAuthProvider.updateDisplayName(fullName: name) { updateResult, error in
-                                self.session?.fullName = updateResult?.displayName
+                                newUser.fullName = updateResult?.displayName
                                 
-                                self.userDataProvider.addUserUniqueName(user: self.session!) { result, error in
-                                    if let userDictionary = self.session?.toDictionary() {
-                                        let updatedUser = User(
-                                            from: combineTwoDictionaries(
-                                                dict1: userDictionary,
-                                                dict2: ["userDetails": ["uniqueUsername": result]]
-                                            )
-                                        )
-                                        self.session = updatedUser
-                                    }
+                                self.addUserUniqueName(user: newUser) { result, error in
                                     self.isLoading = false
                                 }
                             }
@@ -85,6 +106,26 @@ class SessionStore : ObservableObject {
             }
         }
     }
+    
+    private func addUserUniqueName(user: User, completion: @escaping (Bool?, Error?) -> Void) {
+        self.userDataProvider.addUserUniqueName(user: user) { result, error in
+            guard error == nil else {
+                completion(true, error)
+                return
+            }
+            
+            let userDictionary = user.toDictionary()
+            let updatedUser = User(
+                from: combineTwoDictionaries(
+                    dict1: userDictionary,
+                    dict2: ["userDetails": ["uniqueUsername": result]]
+                )
+            )
+            self.session = updatedUser
+            completion(true, nil)
+        }
+    }
+    
     
     func signOut() {
         userDataAuthProvider.signOut()
