@@ -8,7 +8,7 @@
 import Firebase
 import FirebaseStorage
 
-class FirebaseStorageDataProvider {
+class FBStorageDataProvider {
     private let storageRef = Storage.storage().reference()
     
     func uploadImage(_ image: UIImage, path: String, completion: @escaping (Result<String, Error>) -> Void) {

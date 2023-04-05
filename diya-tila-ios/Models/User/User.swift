@@ -12,6 +12,7 @@ struct User {
     var fullName: String?
     var email: String!
     var photoURL: URL?
+    var userDetails: UserDetails?
     
     init(firebaseUser: FirebaseAuth.User)  {
         self.id = firebaseUser.uid
@@ -21,10 +22,11 @@ struct User {
     }
     
     init(from dict: [String: Any]) {
-        self.id = dict["uid"] as? String ?? nil
-        self.fullName = dict["displayName"] as? String ?? nil
+        self.id = dict["id"] as? String ?? nil
+        self.fullName = dict["fullName"] as? String ?? nil
         self.email = dict["email"] as? String
         self.photoURL = dict["photoURL"] as? URL ?? nil
+        self.userDetails = UserDetails(from: dict)
     }
     
     func toDictionary() -> [String: Any] {
