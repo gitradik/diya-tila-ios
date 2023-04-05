@@ -13,22 +13,18 @@ struct ProfileView: View {
     var body: some View {
         VStack {
             if let user = sessionStore.session {
-                ProfilePhotoURLLoading(imageURL: user.photoURL)
-                
-                Divider().scenePadding(.top)
-                
                 if let fullName = user.fullName {
-                    Text(fullName)
-                        .font(.largeTitle)
-                        .fontWeight(.medium)
+                    DropdownView()
                 }
                 
+                ProfilePhotoURLLoadingView(imageURL: user.photoURL).padding(.bottom)
                 if let uniqueUsername = user.userDetails?.uniqueUsername {
                     Text("@" + uniqueUsername)
                         .font(.title3)
                         .fontWeight(.light)
                 }
                 
+                Divider().scenePadding(.top)
                 Spacer()
             }
         }.scenePadding(.top)

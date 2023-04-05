@@ -10,7 +10,7 @@ import GoogleSignIn
 
 class SessionStore : ObservableObject {
     @Published var session: User?
-    @Published var isLoading = false
+    @Published var isLoading = true
     var isLoggedIn: Bool { session != nil }
     
     private let userDataProvider: UserDataProvider
@@ -28,11 +28,18 @@ class SessionStore : ObservableObject {
         listener = Auth.auth().addStateDidChangeListener { (auth, resultFbUser) in
             guard let fbUser = resultFbUser else {
                 self.session = nil
+                self.isLoading = false
                 return
             }
             
             let newUser = User(firebaseUser: fbUser)
             userDataProvider.getUserDetais(user: newUser) { resultUserDetails, error in
+                guard error == nil else {
+                    self.session = nil
+                    self.isLoading = false
+                    return
+                }
+                
                 let updatedUser = User(
                     from: combineTwoDictionaries(
                         dict1: newUser.toDictionary(),
@@ -40,6 +47,7 @@ class SessionStore : ObservableObject {
                     )
                 )
                 self.session = updatedUser
+                self.isLoading = false
             }
         }
     }
