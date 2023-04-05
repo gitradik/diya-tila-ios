@@ -25,17 +25,18 @@ class SessionStore : ObservableObject {
         self.userDataAuthProvider = userDataAuthProvider
         self.fbSrotageDataProvider = fbSrotageDataProvider
         
-        listener = Auth.auth().addStateDidChangeListener { (auth, user) in
-            guard let user = user else {
+        listener = Auth.auth().addStateDidChangeListener { (auth, resultFbUser) in
+            guard let fbUser = resultFbUser else {
                 self.session = nil
                 return
             }
-            let newUser = User(firebaseUser: user)
-            userDataProvider.getUserDetais(user: newUser) { resultDictionary, error in
+            
+            let newUser = User(firebaseUser: fbUser)
+            userDataProvider.getUserDetais(user: newUser) { resultUserDetails, error in
                 let updatedUser = User(
                     from: combineTwoDictionaries(
                         dict1: newUser.toDictionary(),
-                        dict2: ["userDetails": resultDictionary as Any]
+                        dict2: ["userDetails": resultUserDetails as Any]
                     )
                 )
                 self.session = updatedUser
@@ -52,20 +53,15 @@ class SessionStore : ObservableObject {
     
     func googleLogin() {
         self.isLoading = true
-        userDataAuthProvider.signInWithGoogle { result, error in
-            guard let user = result else {
+        userDataAuthProvider.signInWithGoogle { resultFbUser, error in
+            guard let fbUser = resultFbUser else {
                 self.isLoading = false
                 return
             }
             
-            let newUser = User(firebaseUser: user)
+            let newUser = User(firebaseUser: fbUser)
             self.userDataProvider.uniqueUsernameAlreadyExist(user: newUser) { result, error in
-                guard error == nil else {
-                    self.isLoading = false
-                    return
-                }
-
-                if result! == true  {
+                guard error == nil, result! == false else {
                     self.isLoading = false
                     return
                 }
@@ -85,17 +81,20 @@ class SessionStore : ObservableObject {
         fbSrotageDataProvider.uploadImage(uiImage, path: imagePath) { result in
             switch result {
             case .success(let url):
-                self.userDataAuthProvider.register(email, passwd) { registerResult, error in
-                    if let registerResult = registerResult {
-                        var newUser = User(firebaseUser: registerResult)
-                        self.userDataAuthProvider.updatePhotoURL(url: URL(string: url)!) { updateResult, error in
-                            newUser.photoURL = updateResult?.photoURL
-                            self.userDataAuthProvider.updateDisplayName(fullName: name) { updateResult, error in
-                                newUser.fullName = updateResult?.displayName
-                                
-                                self.addUserUniqueName(user: newUser) { result, error in
-                                    self.isLoading = false
-                                }
+                self.userDataAuthProvider.register(email, passwd) { registerResultFbUser, error in
+                    guard let fbUser = registerResultFbUser else {
+                        self.isLoading = false
+                        return
+                    }
+                    
+                    var newUser = User(firebaseUser: fbUser)
+                    self.userDataAuthProvider.updatePhotoURL(url: URL(string: url)!) { updateResultFbUser, error in
+                        newUser.photoURL = updateResultFbUser?.photoURL
+                        self.userDataAuthProvider.updateDisplayName(fullName: name) { updateResultFbUser, error in
+                            newUser.fullName = updateResultFbUser?.displayName
+                            
+                            self.addUserUniqueName(user: newUser) { result, error in
+                                self.isLoading = false
                             }
                         }
                     }
