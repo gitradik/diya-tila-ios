@@ -23,8 +23,10 @@
 		4B71025B29DEDA6E001E99F6 /* Wait.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B71025A29DEDA6E001E99F6 /* Wait.json */; };
 		4B71025D29DEDAF5001E99F6 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71025C29DEDAF5001E99F6 /* LoaderView.swift */; };
 		4B71025F29DEDD58001E99F6 /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71025E29DEDD58001E99F6 /* HexColor.swift */; };
+		4B71026129DEE86A001E99F6 /* LinkedAccountsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71026029DEE86A001E99F6 /* LinkedAccountsStore.swift */; };
 		4B7977C429DE196C00BE670F /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 4B7977C329DE196C00BE670F /* SwiftUIX */; };
 		4B8AAE5229DDAFC900757A75 /* DropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8AAE5129DDAFC900757A75 /* DropdownView.swift */; };
+		4BA58B9D29DF427B007EEB2D /* PopoverTopContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA58B9C29DF427B007EEB2D /* PopoverTopContentView.swift */; };
 		4BA7CB0029D77D1800A954A7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA7CAFF29D77D1800A954A7 /* User.swift */; };
 		4BA7CB0829D7834800A954A7 /* UserDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BA7CB0729D7834800A954A7 /* UserDataProvider.swift */; };
 		4BAEDDB729D6C7E90032ECB8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 4BAEDDB629D6C7E90032ECB8 /* FirebaseAnalytics */; };
@@ -68,7 +70,9 @@
 		4B71025A29DEDA6E001E99F6 /* Wait.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Wait.json; sourceTree = "<group>"; };
 		4B71025C29DEDAF5001E99F6 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		4B71025E29DEDD58001E99F6 /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
+		4B71026029DEE86A001E99F6 /* LinkedAccountsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedAccountsStore.swift; sourceTree = "<group>"; };
 		4B8AAE5129DDAFC900757A75 /* DropdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownView.swift; sourceTree = "<group>"; };
+		4BA58B9C29DF427B007EEB2D /* PopoverTopContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverTopContentView.swift; sourceTree = "<group>"; };
 		4BA7CAFF29D77D1800A954A7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4BA7CB0729D7834800A954A7 /* UserDataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataProvider.swift; sourceTree = "<group>"; };
 		4BAEDDC229D6C8CE0032ECB8 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -181,6 +185,7 @@
 				4B8AAE5129DDAFC900757A75 /* DropdownView.swift */,
 				4B55DBF229D99C91007B0BEB /* PhotoURLLoadingView.swift */,
 				4B71025C29DEDAF5001E99F6 /* LoaderView.swift */,
+				4BA58B9C29DF427B007EEB2D /* PopoverTopContentView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -207,6 +212,7 @@
 			isa = PBXGroup;
 			children = (
 				4BAEDDC929D6CF4C0032ECB8 /* SessionStore.swift */,
+				4B71026029DEE86A001E99F6 /* LinkedAccountsStore.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -375,6 +381,7 @@
 				4BAEDDCA29D6CF4C0032ECB8 /* SessionStore.swift in Sources */,
 				4B8AAE5229DDAFC900757A75 /* DropdownView.swift in Sources */,
 				4BAEDDC629D6C9020032ECB8 /* MainView.swift in Sources */,
+				4BA58B9D29DF427B007EEB2D /* PopoverTopContentView.swift in Sources */,
 				4B213A4F29DB159C004E8ED3 /* NNImageClassification.swift in Sources */,
 				4B6E533A29DC805900A1AD37 /* UserDetails.swift in Sources */,
 				4BD905E129D6AC23009FE5E5 /* ContentView.swift in Sources */,
@@ -388,6 +395,7 @@
 				4B1E8AEC29DCC6E200F74C71 /* EnvironmentFile.swift in Sources */,
 				4BAEDDE429D737E80032ECB8 /* OAuthSignInWithGoogleButton.swift in Sources */,
 				4BAEDDD429D706EF0032ECB8 /* AuthView.swift in Sources */,
+				4B71026129DEE86A001E99F6 /* LinkedAccountsStore.swift in Sources */,
 				4B213A5129DB19B6004E8ED3 /* NNImageCropAndScale.swift in Sources */,
 				4B6E533829DC5D5D00A1AD37 /* FBDatabaseProvider.swift in Sources */,
 				4B55DBFA29D9AA26007B0BEB /* ImagePicker.swift in Sources */,

@@ -10,6 +10,37 @@ import FirebaseDatabase
 
 class UserDataProvider: FBDatabaseProvider {
     
+    func updateUserDetails(user: User, completion: @escaping ([String: Any]?, Error?) -> Void) {
+        guard let id = user.id,
+        let userDetails = user.userDetails
+        else {
+            completion(nil, nil)
+            return
+        }
+        
+        let userDetailsDictionary = userDetails.toDictionary()
+        let usersDetailsUpdates = FBDatabaseUpdates.UserDetails(id, userDetailsDictionary)
+        self.db.reference().updateChildValues(usersDetailsUpdates.call()) { error, ref in
+            guard error == nil else {
+                completion(nil, error)
+                return
+            }
+            
+            completion(userDetailsDictionary, error)
+            
+            print(">>>>>>>>>>>>>>>", ref)
+            //            guard let snap = ref else {
+            //                completion(nil, nil)
+            //                return
+            //            }
+            //
+            //            if let error = error {
+            //                completion(nil, error)
+            //            } else {
+            //
+        }
+    }
+    
     func getUserDetais(user: User, completion: @escaping ([String: Any]?, Error?) -> Void) {
         if let id = user.id {
             let ref = self.db.reference(withPath: FBDatabaseTables.UserDetails.rawValue)
@@ -46,7 +77,7 @@ class UserDataProvider: FBDatabaseProvider {
                             let usernamesUpdates = FBDatabaseUpdates.Usernames(uniqueUsername)
                             self.db.reference().updateChildValues(usernamesUpdates.call())
                             
-                            let usersDetailsUpdates = FBDatabaseUpdates.UserDetails(user.id!, uniqueUsername)
+                            let usersDetailsUpdates = FBDatabaseUpdates.UserDetails(user.id!, ["uniqueUsername": uniqueUsername])
                             self.db.reference().updateChildValues(usersDetailsUpdates.call())
                             completion(uniqueUsername, error)
                         } else if error != nil {

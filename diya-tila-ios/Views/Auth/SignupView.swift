@@ -54,13 +54,13 @@ struct SignupView: View {
                                 Spacer()
                                 Image("Plus")
                                     .sizeToFit(width: 25, height: 25)
-                                    .overlay(Circle().stroke(Color.secondaryColor, lineWidth: 3))
-                                    .onTapGesture {
-                                        self.showingImagePicker = true
-                                    }
+                                    .overlay(Circle().stroke(Color.secondaryColor, lineWidth: 4))
                             }
                         }
                     }.frame(width: photoSize.width, height: photoSize.height)
+                        .onTapGesture {
+                            self.showingImagePicker = true
+                        }
 
                 }
             }.scenePadding(.bottom)

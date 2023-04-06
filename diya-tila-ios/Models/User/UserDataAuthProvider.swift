@@ -81,7 +81,6 @@ class UserDataAuthProvider: ObservableObject {
     }
     
     // MARK: OAuth
-    
     // Google
     func signInWithGoogle(completion: @escaping (FirebaseAuth.User?, Error?) -> Void) {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
@@ -95,8 +94,7 @@ class UserDataAuthProvider: ObservableObject {
             
             if let u = result?.user,
                let idToken = u.idToken?.tokenString {
-                let credential = GoogleAuthProvider.credential(withIDToken: idToken,
-                                                               accessToken: u.accessToken.tokenString)
+                let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: u.accessToken.tokenString)
                 Auth.auth().signIn(with: credential) { result, error in
                     if let err = error {
                         self.printLoginError(err)
@@ -118,3 +116,32 @@ class UserDataAuthProvider: ObservableObject {
         }
     }
 }
+
+
+
+// MARK: no need yet
+// Function to link a provider account to the current user account
+//    private func linkProviderAccount(credential: AuthCredential, completion: @escaping (Error?) -> Void) {
+//        if let currentUser = Auth.auth().currentUser {
+//            currentUser.link(with: credential, completion: { (result, error) in
+//                if let error = error {
+//                    completion(error)
+//                } else {
+//                    completion(nil)
+//                }
+//            })
+//        }
+//    }
+//    private func unlinkProvider(providerID: String, completion: @escaping (Error?) -> Void) {
+//        if let currentUser = Auth.auth().currentUser {
+//            currentUser.unlink(fromProvider: providerID) { (result, error) in
+//                if let error = error {
+//                    // Handle unlinking error
+//                    completion(error)
+//                } else {
+//                    // Account successfully unlinked
+//                    completion(nil)
+//                }
+//            }
+//        }
+//    }

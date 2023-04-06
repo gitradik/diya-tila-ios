@@ -28,16 +28,16 @@ class FBDatabaseProvider: ObservableObject {
     
     enum FBDatabaseUpdates {
         case Usernames(String)
-        case UserDetails(String, String)
+        case UserDetails(String, [String: Any])
 
         func call() -> [String: Any] {
             switch self {
             case .Usernames(let username):
                 let key = "Usernames/\(username)"
                 return [key: username]
-            case .UserDetails(let userID, let uniqueUsername):
+            case .UserDetails(let userID, let dicProperties):
                 let key = "UsersDetails/\(userID)"
-                let value: [String: Any] = ["uniqueUsername": uniqueUsername]
+                let value: [String: Any] = dicProperties
                 return [key: value]
             }
         }
