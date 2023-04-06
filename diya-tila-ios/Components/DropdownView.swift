@@ -1,49 +1,64 @@
-//
-//  DropdownView.swift
-//  diya-tila-ios
-//
-//  Created by Rodion Malakhov on 05.04.2023.
-//
-
 import SwiftUI
 
-struct DropdownView: View {
-    
-    let choices = ["Choice 1", "Choice 2", "Choice 3"]
-    @State private var selectedChoice: String?
-    @State private var isShowingChoices = false
-    
+struct DropdownView<T>: View {
+    let choices: [T]
+    let title: String
+    let mapItemView: (T) -> Text
+    let mapTitleView: (T) -> Text
+
+    @State private var selectedChoice: T?
+    @State private var isShowingPopover = false
+
     var body: some View {
         VStack {
             Button(action: {
-                self.isShowingChoices = true
+                self.isShowingPopover = true
             }) {
-                Text("Select a Choice")
+                if let choice = selectedChoice {
+                    mapTitleView(choice)
+                } else {
+                    Text("Select a choice")
+                }
             }
-            .sheet(isPresented: $isShowingChoices, content: {
-                NavigationView {
-                    List(choices, id: \.self) { choice in
-                        Button(action: {
-                            self.selectedChoice = choice
-                            self.isShowingChoices = false
-                        }) {
-                            Text(choice)
-                        }
+            .popover(isPresented: $isShowingPopover) {
+                VStack {
+                    HStack {
+                        Spacer().frame(width: 50)
+                        Spacer().overlay(Group {
+                            Text(title)
+                        }, alignment: .center)
+                        Spacer().overlay(Group {
+                            VStack {
+                                Button(action: {
+                                    self.isShowingPopover = false
+                                }, label: {
+                                    Image(systemName: "xmark")
+                                }).foregroundColor(.black)
+                            }
+                        }, alignment: .trailing)
+                        .frame(width: 50)
                     }
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Image(systemName: "xmark").onTapGesture {
-                                self.isShowingChoices = false
+                    .scenePadding(.vertical)
+
+                    VStack(alignment: .leading) {
+                        ForEach(0..<choices.count) { index in
+                            Button(action: {
+                                selectedChoice = choices[index]
+                                self.isShowingPopover = false
+                            }) {
+                                mapItemView(choices[index])
                             }
                         }
-                    }
-                    .navigationBarTitle("Choose a Choice")
+                    }.frame(maxWidth: .infinity, alignment: .leading)
+                    Spacer()
                 }
-            })
-            if let selectedChoice = selectedChoice {
-                Text("You selected: \(selectedChoice)")
+                .padding(.top, 3)
+                .padding(.leading, 7)
+                .padding(.trailing, 7)
+                .background(Color.white) // Set VStack background color to white
             }
+        }.onAppear {
+            selectedChoice = choices[0]
         }
     }
 }
-
