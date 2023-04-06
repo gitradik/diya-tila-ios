@@ -10,6 +10,7 @@ import Firebase
 import GoogleSignIn
 
 struct OAuthSignInWithGoogleButton: View {
+    let buttonText: Text
     let action: () -> Void
     
     var body: some View {
@@ -18,13 +19,13 @@ struct OAuthSignInWithGoogleButton: View {
                 Image("Google")
                     .resizable()
                     .frame(width: 34, height: 34)
-                Text("Sign in with Google")
+                buttonText
                     .fontWeight(.semibold)
                     .font(.body)
             }
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 50)
             .cornerRadius(40)
         }.buttonStyle(.bordered)
-            .tint(.cyan)
+            .tint(Color.primaryColor)
     }
 }

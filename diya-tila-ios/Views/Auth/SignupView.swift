@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftUIX
 
 struct SignupView: View {
-    let signUp: ((_ name: String, _ email: String, _ passwd: String, _ image: UIImage?) -> Void)?
+    let signUp: ((_ name: String, _ email: String, _ passwd: String, _ image: UIImage?) -> Void)
+    let signUpGoogle: () -> Void
     
     @State var selectedImage: UIImage?
     @State var showingImagePicker = false
@@ -18,7 +20,7 @@ struct SignupView: View {
     @State private var email: String = ""
     @State var image: UIImage?
     
-    let photoSize = (width: CGFloat(170), height: CGFloat(170))
+    let photoSize = (width: CGFloat(120), height: CGFloat(120))
     
     var body: some View {
         VStack {
@@ -29,11 +31,12 @@ struct SignupView: View {
                             Image(uiImage: image)
                                 .resizable()
                                 .scaledToFill()
-                                .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                                .overlay(Circle().stroke(Color.gray, lineWidth: 1))
                                 .clipShape(Circle())
-                                .shadow(radius: 4)
                         } else {
-                            ProgressView()
+                            ActivityIndicator()
+                                .animated(true)
+                                .style(.regular)
                         }
                     }.frame(width: photoSize.width, height: photoSize.height)
                     .onAppear {
@@ -43,18 +46,22 @@ struct SignupView: View {
                     }
                 } else {
                     ZStack(alignment: .center) {
-                        LottieAnimationWithFile(lottieFile: "GreenAnimation", loopMode: .repeat(2.0))
-                            .aspectRatio(contentMode: .fill)
-                        Text("Pick photo")
-                            .font(.title3)
-                            .fontWeight(.bold)
-                            .foregroundColor(.cyan)
-                            .multilineTextAlignment(.center)
-                    }
-                    .frame(width: photoSize.width, height: photoSize.height)
-                    .onTapGesture {
-                        self.showingImagePicker = true
-                    }
+                        Image("User")
+                            .sizeToFit(width: photoSize.width, height: photoSize.height)
+                        VStack {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Image("Plus")
+                                    .sizeToFit(width: 25, height: 25)
+                                    .overlay(Circle().stroke(Color.secondaryColor, lineWidth: 3))
+                                    .onTapGesture {
+                                        self.showingImagePicker = true
+                                    }
+                            }
+                        }
+                    }.frame(width: photoSize.width, height: photoSize.height)
+
                 }
             }.scenePadding(.bottom)
             
@@ -71,18 +78,22 @@ struct SignupView: View {
                     return
                 }
                 
-                if let fn = signUp {
-                    fn(name, email, passwd, image)
-                }
+                signUp(name, email, passwd, image)
             }){
                 Text("Register")
                     .padding(12)
-                    .border(.cyan)
+                    .border(Color.primaryColor)
             }
             .frame(minWidth: 0, maxWidth: .infinity)
             .foregroundColor(.white)
-            .background(.cyan)
+            .background(Color.primaryColor)
             .cornerRadius(10)
+            .scenePadding(.bottom)
+            
+            OAuthSignInWithGoogleButton(buttonText: Text("Register with Google")) {
+                signUpGoogle()
+            }
+            Spacer()
         }
         .scenePadding(.top)
         .scenePadding(.horizontal)

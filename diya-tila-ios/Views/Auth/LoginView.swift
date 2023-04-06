@@ -28,11 +28,11 @@ struct LoginView: View {
             }) {
                 Text("Sign in")
                     .padding(12)
-                    .border(.cyan)
+                    .border(Color.primaryColor)
             }
             .frame(minWidth: 0, maxWidth: .infinity)
             .foregroundColor(.white)
-            .background(.cyan)
+            .background(Color.primaryColor)
             .cornerRadius(10)
         }
     }
