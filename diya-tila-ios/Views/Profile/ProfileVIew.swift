@@ -8,30 +8,45 @@
 import SwiftUI
 
 struct ProfileView: View {
+    
     let sessionStore: SessionStore
+    @StateObject var linkedAccountsStore = LinkedAccountsStore()
+    
+    @State private var showSignup = false
+    
     
     var body: some View {
         VStack {
-            if let user = sessionStore.session {
-                ProfilePhotoURLLoading(imageURL: user.photoURL)
-                
-                Divider().scenePadding(.top)
-                
-                if let fullName = user.fullName {
-                    Text(fullName)
-                        .font(.largeTitle)
-                        .fontWeight(.medium)
+            if let user = sessionStore.session,
+               let userDetails = sessionStore.session?.userDetails {
+                DropdownView<User>(choices: [user], title: "Change account", mapItemView: { item, index in
+                    Text("@\(item.userDetails!.uniqueUsername!)")
+                }, mapTitleView: { item in
+                    Text("\(item.fullName!)")
+                        .foregroundColor(.black)
+                        .fontWeight(.bold)
+                }) { item in
+                    self.showSignup = true
                 }
                 
+                PhotoURLLoadingView(imageURL: user.photoURL!, width: 100, height: 100)
+                Text("@\(userDetails.uniqueUsername!)")
+                
+                Divider()
                 Spacer()
             }
-            
-            
-//            InfoView(icon: "envelope", label: "Email", value: "john.doe@gmail.com")
-//            InfoView(icon: "phone", label: "Phone", value: "(123) 456-7890")
-//            InfoView(icon: "house", label: "Address", value: "123 Main Street, Anytown, USA")
-            
-//            Spacer()
-        }.scenePadding(.top)
+        }
+        .sheet(isPresented: self.$showSignup) {
+            PopoverTopContentView(title: "Add account", isShow: self.$showSignup)
+            SignupView() { name, email, passwd, image in
+                guard let image = image else {return}
+                sessionStore.register(name: name, email: email, passwd: passwd, uiImage: image)
+                self.showSignup = false
+            } signUpGoogle: {
+                sessionStore.googleLogin()
+                self.showSignup = false
+            }
+        }
+        .scenePadding(.top)
     }
 }

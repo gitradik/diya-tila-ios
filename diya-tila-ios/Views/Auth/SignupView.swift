@@ -6,46 +6,62 @@
 //
 
 import SwiftUI
+import SwiftUIX
 
 struct SignupView: View {
-    let signUp: ((_ name: String, _ email: String, _ passwd: String, _ image: UIImage?) -> Void)?
+    let signUp: ((_ name: String, _ email: String, _ passwd: String, _ image: UIImage?) -> Void)
+    let signUpGoogle: () -> Void
     
-    @State var image: UIImage?
+    @State var selectedImage: UIImage?
     @State var showingImagePicker = false
+    
     @State private var name: String = ""
     @State private var passwd: String = ""
     @State private var email: String = ""
+    @State var image: UIImage?
+    
+    let photoSize = (width: CGFloat(120), height: CGFloat(120))
     
     var body: some View {
         VStack {
             HStack {
-                if let image = image {
-                    NNImageCropAndScaleView(image: image, width: 200, height: 200)
-//                    Image(uiImage: image)
-//                        .resizable()
-//                        .scaledToFill()
-//                        .frame(width: 200, height: 200)
-//                        .overlay(Circle().stroke(Color.white, lineWidth: 2))
-//                        .clipShape(Circle())
-//                        .shadow(radius: 4)
-//                        .onAppear {
-//                            let imgClass = NNImageClassification(image: image)
-//                            print(imgClass.getClassification)
-//                        }
+                if let selectedImage = selectedImage {
+                    VStack {
+                        if let image = image {
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFill()
+                                .overlay(Circle().stroke(Color.gray, lineWidth: 1))
+                                .clipShape(Circle())
+                        } else {
+                            ActivityIndicator()
+                                .animated(true)
+                                .style(.regular)
+                        }
+                    }.frame(width: photoSize.width, height: photoSize.height)
+                    .onAppear {
+                        NNImageCropAndScale(image: selectedImage, width: photoSize.width, height: photoSize.height).detectFace { result in
+                            self.image = try? result.get()
+                        }
+                    }
                 } else {
                     ZStack(alignment: .center) {
-                        LottieAnimationWithFile(lottieFile: "GreenAnimation", loopMode: .repeat(2.0))
-                            .aspectRatio(contentMode: .fill)
-                        Text("Pick photo")
-                            .font(.title3)
-                            .fontWeight(.bold)
-                            .foregroundColor(.cyan)
-                            .multilineTextAlignment(.center)
-                    }
-                    .frame(width: 200, height: 200)
-                    .onTapGesture {
-                        self.showingImagePicker = true
-                    }
+                        Image("User")
+                            .sizeToFit(width: photoSize.width, height: photoSize.height)
+                        VStack {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                Image("Plus")
+                                    .sizeToFit(width: 25, height: 25)
+                                    .overlay(Circle().stroke(Color.secondaryColor, lineWidth: 4))
+                            }
+                        }
+                    }.frame(width: photoSize.width, height: photoSize.height)
+                        .onTapGesture {
+                            self.showingImagePicker = true
+                        }
+
                 }
             }.scenePadding(.bottom)
             
@@ -55,25 +71,37 @@ struct SignupView: View {
                 .textFieldStyle(.roundedBorder)
             SecureField("Password", text: $passwd)
                 .textFieldStyle(.roundedBorder)
+            
+            // Button for registration
             Button(action: {
-                if let fn = signUp {
-                    fn(name, email, passwd, image)
+                guard !name.isEmpty && !email.isEmpty && !passwd.isEmpty && image != nil else {
+                    return
                 }
+                
+                signUp(name, email, passwd, image)
             }){
                 Text("Register")
                     .padding(12)
-                    .border(.cyan)
+                    .border(Color.primaryColor)
             }
             .frame(minWidth: 0, maxWidth: .infinity)
             .foregroundColor(.white)
-            .background(.cyan)
+            .background(Color.primaryColor)
             .cornerRadius(10)
+            .scenePadding(.bottom)
+            
+            OAuthSignInWithGoogleButton(buttonText: Text("Register with Google")) {
+                signUpGoogle()
+            }
+            Spacer()
         }
         .scenePadding(.top)
         .scenePadding(.horizontal)
         .sheet(isPresented: $showingImagePicker) {
-            ImagePicker(image: $image)
+            ImagePicker(image: $selectedImage)
         }
+        
         Spacer()
     }
 }
+

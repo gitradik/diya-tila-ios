@@ -21,7 +21,7 @@ struct AuthView: View {
                         sessionStore.login(email: email, passwd: passwd)
                     }.scenePadding(.bottom)
                     
-                    OAuthSignInWithGoogleButton {
+                    OAuthSignInWithGoogleButton(buttonText: Text("Sign in with Google")) {
                         sessionStore.googleLogin()
                     }
                     Spacer()
@@ -30,6 +30,8 @@ struct AuthView: View {
                             sessionStore.register(name: name, email: email, passwd: passwd, uiImage: image)
                         }
                        
+                    } signUpGoogle: {
+                        sessionStore.googleLogin()
                     }) {
                         Text("Register")
                     }

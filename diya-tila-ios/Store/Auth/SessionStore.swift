@@ -9,34 +9,24 @@ import FirebaseAuth
 import GoogleSignIn
 
 class SessionStore : ObservableObject {
+    let environment = EnvironmentFile.shared
+    
     @Published var session: User?
-    @Published var isLoading = false
+    @Published var isLoading = true
     var isLoggedIn: Bool { session != nil }
     
-    private let userDataAuthProvider: UserDataAuthProvider
     private let userDataProvider: UserDataProvider
-    private let fbSrotageDataProvider: FirebaseStorageDataProvider
+    private let userDataAuthProvider: UserDataAuthProvider
+    private let fbSrotageDataProvider: FBStorageDataProvider
     private var listener: AuthStateDidChangeListenerHandle?
     
-    init(userDataAuthProvider: UserDataAuthProvider, userDataProvider: UserDataProvider, fbSrotageDataProvider: FirebaseStorageDataProvider) {
-        self.userDataAuthProvider = userDataAuthProvider
+    init(userDataProvider: UserDataProvider,
+         userDataAuthProvider: UserDataAuthProvider,
+         fbSrotageDataProvider: FBStorageDataProvider) {
         self.userDataProvider = userDataProvider
+        self.userDataAuthProvider = userDataAuthProvider
         self.fbSrotageDataProvider = fbSrotageDataProvider
-        
-        listener = Auth.auth().addStateDidChangeListener { (auth, user) in
-            if let user = user {
-                self.session = User(firebaseUser: user)
-            } else {
-                self.session = nil
-            }
-        }
-    }
-    
-    func update(user: User) {
-        self.isLoading = true
-        userDataProvider.update(user: user) { error in
-            self.isLoading = false
-        }
+        self.initStateDidChangeListener()
     }
     
     func login(email: String, passwd: String) {
@@ -47,26 +37,78 @@ class SessionStore : ObservableObject {
     }
     
     func googleLogin() {
+        self.removeStateDidChangeListener()
         self.isLoading = true
-        userDataAuthProvider.signInWithGoogle { result, error in
-            self.isLoading = false
+        
+        userDataAuthProvider.signInWithGoogle { resultFbUser, error in
+            guard let fbUser = resultFbUser else {
+                self.isLoading = false
+                return
+            }
+            
+            let newUser = User(firebaseUser: fbUser)
+            self.userDataProvider.uniqueUsernameAlreadyExist(user: newUser) { result, error in
+                guard error == nil else {
+                    self.isLoading = false
+                    return
+                }
+                
+                guard result == false else {
+                    self.userDataProvider.getUserDetais(user: newUser) { resultUserDetails, error in
+                        guard error == nil else {
+                            self.session = nil
+                            self.isLoading = false
+                            return
+                        }
+                        
+                        let updatedUser = User(
+                            from: combineDictionaries(
+                                [newUser.toDictionary(), ["userDetails": resultUserDetails as Any]]
+                            )
+                        )
+                        self.session = updatedUser
+                        self.initStateDidChangeListener()
+                        self.isLoading = false
+                    }
+                    return
+                }
+                
+                self.addUserUniqueName(user: newUser) { resultUpdatedUser, error in
+                    self.session = resultUpdatedUser
+                    self.initStateDidChangeListener()
+                    self.isLoading = false
+                }
+            }
         }
     }
     
     func register(name: String, email: String, passwd: String, uiImage: UIImage) {
+        guard let path = environment.plistDictionary?["PROFILE_IMAGES_PATH"] as? String else {
+            fatalError("Wrong environment variable value: \"PROFILE_IMAGES_PATH\"")
+        }
+        self.removeStateDidChangeListener()
         self.isLoading = true
         let imageName = uiImage.accessibilityLabel ?? "Unknown"
-        let imagePath = "profile_images/\(imageName).jpg"
+        let imagePath = "\(path)\(imageName).jpg"
         
         fbSrotageDataProvider.uploadImage(uiImage, path: imagePath) { result in
             switch result {
             case .success(let url):
-                self.userDataAuthProvider.register(email, passwd) { registerResult, error in
-                    if registerResult != nil {
-                        self.userDataAuthProvider.updatePhotoURL(url: URL(string: url)!) { updateResult, error in
-                            self.session?.photoURL = updateResult?.photoURL
-                            self.userDataAuthProvider.updateDisplayName(fullName: name) { updateResult, error in
-                                self.session?.fullName = updateResult?.displayName
+                self.userDataAuthProvider.register(email, passwd) { registerResultFbUser, error in
+                    guard let fbUser = registerResultFbUser else {
+                        self.isLoading = false
+                        return
+                    }
+                    
+                    var newUser = User(firebaseUser: fbUser)
+                    self.userDataAuthProvider.updatePhotoURL(url: URL(string: url)!) { updateResultFbUserPhotoURL, error in
+                        newUser.photoURL = updateResultFbUserPhotoURL?.photoURL
+                        self.userDataAuthProvider.updateDisplayName(fullName: name) { updateResultFbUserDisplayName, error in
+                            newUser.fullName = updateResultFbUserDisplayName?.displayName
+                            
+                            self.addUserUniqueName(user: newUser) { resultUpdatedUser, error in
+                                self.session = resultUpdatedUser
+                                self.initStateDidChangeListener()
                                 self.isLoading = false
                             }
                         }
@@ -83,9 +125,57 @@ class SessionStore : ObservableObject {
         userDataAuthProvider.signOut()
     }
     
-    deinit {
+    private func addUserUniqueName(user: User, completion: @escaping (User?, Error?) -> Void) {
+        self.userDataProvider.addUserUniqueName(user: user) { result, error in
+            guard error == nil else {
+                completion(nil, error)
+                return
+            }
+            
+            let userDictionary = user.toDictionary()
+            let updatedUser = User(
+                from: combineDictionaries(
+                    [userDictionary, ["userDetails": ["uniqueUsername": result]]]
+                )
+            )
+            
+            completion(updatedUser, nil)
+        }
+    }
+    
+    private func initStateDidChangeListener() {
+        listener = Auth.auth().addStateDidChangeListener { (auth, resultFbUser) in
+            guard let fbUser = resultFbUser else {
+                self.session = nil
+                self.isLoading = false
+                return
+            }
+            
+            let newUser = User(firebaseUser: fbUser)
+            self.userDataProvider.getUserDetais(user: newUser) { resultUserDetails, error in
+                guard error == nil else {
+                    self.session = nil
+                    self.isLoading = false
+                    return
+                }
+                
+                let updatedUser = User(
+                    from: combineDictionaries(
+                        [newUser.toDictionary(), ["userDetails": resultUserDetails as Any]]
+                    )
+                )
+                self.session = updatedUser
+                self.isLoading = false
+            }
+        }
+    }
+    private func removeStateDidChangeListener() {
         if let l = listener {
             Auth.auth().removeStateDidChangeListener(l)
         }
+    }
+    
+    deinit {
+        self.removeStateDidChangeListener()
     }
 }

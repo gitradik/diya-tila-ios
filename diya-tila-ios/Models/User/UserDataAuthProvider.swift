@@ -31,7 +31,6 @@ class UserDataAuthProvider: ObservableObject {
                 self.printLoginError(err)
                 completion(nil, err)
             } else {
-                print("User is signed in.")
                 completion(authResult?.user, nil)
             }
         }
@@ -40,13 +39,11 @@ class UserDataAuthProvider: ObservableObject {
     func register(_ email: String, _ passwd: String, completion: @escaping (FirebaseAuth.User?, Error?) -> Void) {
         Auth.auth().createUser(withEmail: email, password: passwd) { authResult, error in
             if let err = error {
-                print("Error creating user: \(err)")
                 completion(nil, err)
                 return
             }
             
             guard (authResult?.user != nil) else {
-                print("Error creating user: User is nil")
                 completion(nil, nil)
                 return
             }
@@ -61,7 +58,6 @@ class UserDataAuthProvider: ObservableObject {
         changeRequest?.photoURL = url
         changeRequest?.commitChanges { error in
             if let err = error {
-                print("Error updating user: \(err)")
                 completion(nil, err)
                 return
             }
@@ -76,7 +72,6 @@ class UserDataAuthProvider: ObservableObject {
         changeRequest?.displayName = fullName
         changeRequest?.commitChanges { error in
             if let err = error {
-                print("Error updating user: \(err)")
                 completion(nil, err)
                 return
             }
@@ -86,7 +81,6 @@ class UserDataAuthProvider: ObservableObject {
     }
     
     // MARK: OAuth
-    
     // Google
     func signInWithGoogle(completion: @escaping (FirebaseAuth.User?, Error?) -> Void) {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
@@ -100,14 +94,12 @@ class UserDataAuthProvider: ObservableObject {
             
             if let u = result?.user,
                let idToken = u.idToken?.tokenString {
-                let credential = GoogleAuthProvider.credential(withIDToken: idToken,
-                                                               accessToken: u.accessToken.tokenString)
+                let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: u.accessToken.tokenString)
                 Auth.auth().signIn(with: credential) { result, error in
                     if let err = error {
                         self.printLoginError(err)
                         completion(nil, err)
                     } else {
-                        print("User is signed in.")
                         completion(result?.user, nil)
                     }
                 }
@@ -124,3 +116,32 @@ class UserDataAuthProvider: ObservableObject {
         }
     }
 }
+
+
+
+// MARK: no need yet
+// Function to link a provider account to the current user account
+//    private func linkProviderAccount(credential: AuthCredential, completion: @escaping (Error?) -> Void) {
+//        if let currentUser = Auth.auth().currentUser {
+//            currentUser.link(with: credential, completion: { (result, error) in
+//                if let error = error {
+//                    completion(error)
+//                } else {
+//                    completion(nil)
+//                }
+//            })
+//        }
+//    }
+//    private func unlinkProvider(providerID: String, completion: @escaping (Error?) -> Void) {
+//        if let currentUser = Auth.auth().currentUser {
+//            currentUser.unlink(fromProvider: providerID) { (result, error) in
+//                if let error = error {
+//                    // Handle unlinking error
+//                    completion(error)
+//                } else {
+//                    // Account successfully unlinked
+//                    completion(nil)
+//                }
+//            }
+//        }
+//    }

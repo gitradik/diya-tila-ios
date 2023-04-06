@@ -5,8 +5,8 @@
 //  Created by Rodion Malakhov on 31.03.2023.
 //
 
-import Foundation
 import SwiftUI
+import SwiftUIX
 
 struct MainView: View {
     @EnvironmentObject var sessionStore: SessionStore
@@ -14,7 +14,7 @@ struct MainView: View {
     var body: some View {
         VStack {
             if sessionStore.isLoading {
-                ProgressView("Loading...")
+                LoaderView()
             } else {
                 if sessionStore.isLoggedIn {
                     ProfileView(sessionStore: sessionStore)
