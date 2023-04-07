@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PopoverTopContentView: View {
+struct PopoverTitleAndCloseView: View {
     let title: String
     @Binding var isShow: Bool
     

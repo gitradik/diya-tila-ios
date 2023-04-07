@@ -11,14 +11,12 @@ struct ProfileView: View {
     
     let sessionStore: SessionStore
     @StateObject var linkedAccountsStore = LinkedAccountsStore()
-    
     @State private var showSignup = false
-    
     
     var body: some View {
         VStack {
             if let user = sessionStore.session,
-               let userDetails = sessionStore.session?.userDetails {
+               let userDetails = user.userDetails {
                 DropdownView<User>(choices: [user], title: "Change account", mapItemView: { item, index in
                     Text("@\(item.userDetails!.uniqueUsername!)")
                 }, mapTitleView: { item in
@@ -37,7 +35,7 @@ struct ProfileView: View {
             }
         }
         .sheet(isPresented: self.$showSignup) {
-            PopoverTopContentView(title: "Add account", isShow: self.$showSignup)
+            PopoverTitleAndCloseView(title: "Add account", isShow: self.$showSignup)
             SignupView() { name, email, passwd, image in
                 guard let image = image else {return}
                 sessionStore.register(name: name, email: email, passwd: passwd, uiImage: image)

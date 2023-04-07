@@ -29,15 +29,6 @@ class UserDataProvider: FBDatabaseProvider {
             completion(userDetailsDictionary, error)
             
             print(">>>>>>>>>>>>>>>", ref)
-            //            guard let snap = ref else {
-            //                completion(nil, nil)
-            //                return
-            //            }
-            //
-            //            if let error = error {
-            //                completion(nil, error)
-            //            } else {
-            //
         }
     }
     
