@@ -12,7 +12,7 @@ class UserDataProvider: FBDatabaseProvider {
     
     func updateUserDetails(user: User, completion: @escaping ([String: Any]?, Error?) -> Void) {
         guard let id = user.id,
-        let userDetails = user.userDetails
+              let userDetails = user.userDetails
         else {
             completion(nil, nil)
             return
@@ -27,8 +27,6 @@ class UserDataProvider: FBDatabaseProvider {
             }
             
             completion(userDetailsDictionary, error)
-            
-            print(">>>>>>>>>>>>>>>", ref)
         }
     }
     
@@ -70,7 +68,7 @@ class UserDataProvider: FBDatabaseProvider {
                             
                             let usersDetailsUpdates = FBDatabaseUpdates.UserDetails(user.id!, ["uniqueUsername": uniqueUsername])
                             self.db.reference().updateChildValues(usersDetailsUpdates.call())
-                            completion(uniqueUsername, error)
+                            completion(uniqueUsername, nil)
                         } else if error != nil {
                             completion(nil, error)
                         } else {
@@ -91,7 +89,7 @@ class UserDataProvider: FBDatabaseProvider {
         let group = DispatchGroup()
         while !isFinish && count < 5 {
             group.enter()
-            self.checkUserNameAlreadyExist(dbRef: ref, loginName: loginName) { result in
+            self.checkUniqueUsernameAlreadyExist(dbRef: ref, loginName: loginName) { result in
                 count += 1
                 if result == false {
                     // If the login name is not in use, return it as-is
@@ -110,7 +108,7 @@ class UserDataProvider: FBDatabaseProvider {
         }
     }
     
-    private func checkUserNameAlreadyExist(dbRef: DatabaseReference, loginName: String, completion: @escaping(Bool) -> Void) {
+    private func checkUniqueUsernameAlreadyExist(dbRef: DatabaseReference, loginName: String, completion: @escaping(Bool) -> Void) {
         dbRef.child(loginName).observeSingleEvent(of: .value, with: { snapshot in
             completion(snapshot.exists())
         })

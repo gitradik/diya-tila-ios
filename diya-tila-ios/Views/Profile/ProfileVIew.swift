@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct ProfileView: View {
-    
     let sessionStore: SessionStore
-    @StateObject var linkedAccountsStore = LinkedAccountsStore()
+    
+    @State private var count = 0
+    
     @State private var showSignup = false
+    
+    @StateObject var notificationStore = NotificationStore.shared
     
     var body: some View {
         VStack {
@@ -31,6 +34,13 @@ struct ProfileView: View {
                 Text("@\(userDetails.uniqueUsername!)")
                 
                 Divider()
+                Spacer()
+                Button(action: {
+                    count += 1
+                    notificationStore.showNotification(title: "Заголовок уведомления " + String(count), message: "Текст уведомления", duration: Double.random(in: 3...7))
+                }, label: {
+                    Text("Click")
+                })
                 Spacer()
             }
         }

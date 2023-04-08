@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUIX
 
 struct MainView: View {
     @EnvironmentObject var sessionStore: SessionStore
@@ -17,8 +16,16 @@ struct MainView: View {
                 LoaderView()
             } else {
                 if sessionStore.isLoggedIn {
-                    ProfileView(sessionStore: sessionStore)
-                    LogoutView(sessionStore: sessionStore)
+                    VStack {
+                        ProfileView(sessionStore: sessionStore)
+                        Spacer()
+                        LogoutView(sessionStore: sessionStore)
+                    }
+                    .overlay(
+                        NotificationView()
+                            .frame(maxHeight: .infinity)
+                            .edgesIgnoringSafeArea(.all)
+                    )
                 } else {
                     AuthView(sessionStore: sessionStore)
                 }

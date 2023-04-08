@@ -11,24 +11,9 @@ import GoogleSignIn
 
 class UserDataAuthProvider: ObservableObject {
     
-    private func printLoginError(_ error: Error) {
-        let err = error as NSError
-        switch err.code {
-        case AuthErrorCode.userNotFound.rawValue:
-            print("User not found.")
-        case AuthErrorCode.wrongPassword.rawValue:
-            print("Incorrect password.")
-        case AuthErrorCode.invalidEmail.rawValue:
-            print("Invalid email.")
-        default:
-            print("Error: \(error)")
-        }
-    }
-    
     func signIn(_ email: String, _ passwd: String, completion: @escaping (FirebaseAuth.User?, Error?) -> Void) {
         Auth.auth().signIn(withEmail: email, password: passwd) { authResult, error in
             if let err = error {
-                self.printLoginError(err)
                 completion(nil, err)
             } else {
                 completion(authResult?.user, nil)
@@ -97,7 +82,6 @@ class UserDataAuthProvider: ObservableObject {
                 let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: u.accessToken.tokenString)
                 Auth.auth().signIn(with: credential) { result, error in
                     if let err = error {
-                        self.printLoginError(err)
                         completion(nil, err)
                     } else {
                         completion(result?.user, nil)
@@ -108,11 +92,12 @@ class UserDataAuthProvider: ObservableObject {
         }
     }
     
-    func signOut() {
+    func signOut(completion: @escaping (Bool, Error?) -> Void) {
         do {
             try Auth.auth().signOut()
+            completion(true, nil)
         } catch {
-            print("signOut error:", error)
+            completion(false, error)
         }
     }
 }
