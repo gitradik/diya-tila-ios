@@ -18,7 +18,8 @@ class FBStorageDataProvider {
         }
         
         // MARK: Test failture
-        let imageRef = storageRef.child("images/"+path)
+//        let imageRef = storageRef.child("images/"+path)
+        let imageRef = storageRef.child(path)
         imageRef.putData(data) { (metadata, error) in
             if let error = error {
                 completion(.failure(.requestFailed(error.localizedDescription)))

@@ -10,7 +10,11 @@ import UserNotifications
 
 // Abstract error handler
 class ErrorHandler {
+    
     static func handleAPIError(_ error: APIError) {
+        print(error)
+    }
+    static func handleFormFieldValidationError(_ error: FormFieldValidationError) {
         print(error)
     }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum APIError: Error {
+enum APIError: ERRWithMessage {
     case invalidURL(String?)
     case invalidResponse(String?)
     case requestFailed(String?)
@@ -16,17 +16,17 @@ enum APIError: Error {
     var errorMessage: String {
         switch self {
         case .invalidURL(var message):
-            return getDefaultMessage("Invalid URL", message)
+            return createMessage("Invalid URL", message)
         case .invalidResponse(let message):
-            return getDefaultMessage("Invalid Response", message)
+            return createMessage("Invalid Response", message)
         case .requestFailed(let message):
-            return getDefaultMessage("Request Failed", message)
+            return createMessage("Request Failed", message)
         case .decodingFailed(let message):
-            return getDefaultMessage("Decoding Failed", message)
+            return createMessage("Decoding Failed", message)
         }
     }
     
-    private func getDefaultMessage(_ errorName: String, _ message: String?) -> String {
+    private func createMessage(_ errorName: String, _ message: String?) -> String {
         guard let msg = message else {
             return "\"\(errorName)\""
         }

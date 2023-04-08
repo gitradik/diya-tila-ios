@@ -21,10 +21,16 @@
 		4B55DC0329D9F25E007B0BEB /* UserDataAuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B55DC0229D9F25E007B0BEB /* UserDataAuthProvider.swift */; };
 		4B6E533829DC5D5D00A1AD37 /* FBDatabaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E533729DC5D5D00A1AD37 /* FBDatabaseProvider.swift */; };
 		4B6E533A29DC805900A1AD37 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B6E533929DC805900A1AD37 /* UserDetails.swift */; };
+		4B70A99429E1D5D30016A9D3 /* ProfileAccountVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B70A99329E1D5D30016A9D3 /* ProfileAccountVIew.swift */; };
+		4B70A99729E1E4CB0016A9D3 /* ERRWithMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B70A99629E1E4CB0016A9D3 /* ERRWithMessage.swift */; };
+		4B70A99929E1E5650016A9D3 /* FormFieldValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B70A99829E1E5650016A9D3 /* FormFieldValidationError.swift */; };
+		4B70A99F29E1F5730016A9D3 /* FormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B70A99E29E1F5730016A9D3 /* FormField.swift */; };
+		4B70A9A129E1F6600016A9D3 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B70A9A029E1F6600016A9D3 /* Form.swift */; };
+		4B70A9A329E1F82B0016A9D3 /* FormFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B70A9A229E1F82B0016A9D3 /* FormFields.swift */; };
+		4B70A9A529E1F8460016A9D3 /* FormFieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B70A9A429E1F8460016A9D3 /* FormFieldType.swift */; };
 		4B71025B29DEDA6E001E99F6 /* Wait.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B71025A29DEDA6E001E99F6 /* Wait.json */; };
 		4B71025D29DEDAF5001E99F6 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71025C29DEDAF5001E99F6 /* LoaderView.swift */; };
 		4B71025F29DEDD58001E99F6 /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71025E29DEDD58001E99F6 /* HexColor.swift */; };
-		4B8AAE5229DDAFC900757A75 /* DropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B8AAE5129DDAFC900757A75 /* DropdownView.swift */; };
 		4B9A885029E03444005874DD /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A884F29E03444005874DD /* APIError.swift */; };
 		4B9A885229E0352C005874DD /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A885129E0352C005874DD /* ErrorHandler.swift */; };
 		4B9A885529E0379F005874DD /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A885429E0379F005874DD /* APIResponse.swift */; };
@@ -73,10 +79,16 @@
 		4B55DC0229D9F25E007B0BEB /* UserDataAuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataAuthProvider.swift; sourceTree = "<group>"; };
 		4B6E533729DC5D5D00A1AD37 /* FBDatabaseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBDatabaseProvider.swift; sourceTree = "<group>"; };
 		4B6E533929DC805900A1AD37 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
+		4B70A99329E1D5D30016A9D3 /* ProfileAccountVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAccountVIew.swift; sourceTree = "<group>"; };
+		4B70A99629E1E4CB0016A9D3 /* ERRWithMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERRWithMessage.swift; sourceTree = "<group>"; };
+		4B70A99829E1E5650016A9D3 /* FormFieldValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFieldValidationError.swift; sourceTree = "<group>"; };
+		4B70A99E29E1F5730016A9D3 /* FormField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
+		4B70A9A029E1F6600016A9D3 /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
+		4B70A9A229E1F82B0016A9D3 /* FormFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFields.swift; sourceTree = "<group>"; };
+		4B70A9A429E1F8460016A9D3 /* FormFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFieldType.swift; sourceTree = "<group>"; };
 		4B71025A29DEDA6E001E99F6 /* Wait.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Wait.json; sourceTree = "<group>"; };
 		4B71025C29DEDAF5001E99F6 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		4B71025E29DEDD58001E99F6 /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
-		4B8AAE5129DDAFC900757A75 /* DropdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownView.swift; sourceTree = "<group>"; };
 		4B9A884F29E03444005874DD /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		4B9A885129E0352C005874DD /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		4B9A885429E0379F005874DD /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
@@ -145,10 +157,12 @@
 		4B213A4C29DB1544004E8ED3 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				4B70A99529E1E4BC0016A9D3 /* ERR */,
 				4B9A885329E0378F005874DD /* API */,
-				4B9A884E29E0341C005874DD /* Error */,
+				4B70A99B29E1F0E60016A9D3 /* FF */,
 				4B1E8AED29DCE45F00F74C71 /* FB */,
 				4B213A4D29DB1563004E8ED3 /* NN */,
+				4B71025E29DEDD58001E99F6 /* HexColor.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -172,10 +186,29 @@
 			path = LottieFiles;
 			sourceTree = "<group>";
 		};
+		4B70A99529E1E4BC0016A9D3 /* ERR */ = {
+			isa = PBXGroup;
+			children = (
+				4B70A99629E1E4CB0016A9D3 /* ERRWithMessage.swift */,
+			);
+			path = ERR;
+			sourceTree = "<group>";
+		};
+		4B70A99B29E1F0E60016A9D3 /* FF */ = {
+			isa = PBXGroup;
+			children = (
+				4B70A9A429E1F8460016A9D3 /* FormFieldType.swift */,
+				4B70A99E29E1F5730016A9D3 /* FormField.swift */,
+				4B70A9A029E1F6600016A9D3 /* Form.swift */,
+				4B70A9A229E1F82B0016A9D3 /* FormFields.swift */,
+			);
+			path = FF;
+			sourceTree = "<group>";
+		};
 		4B9A884E29E0341C005874DD /* Error */ = {
 			isa = PBXGroup;
 			children = (
-				4B9A884F29E03444005874DD /* APIError.swift */,
+				4B70A99829E1E5650016A9D3 /* FormFieldValidationError.swift */,
 				4B9A885129E0352C005874DD /* ErrorHandler.swift */,
 			);
 			path = Error;
@@ -185,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				4B9A885429E0379F005874DD /* APIResponse.swift */,
+				4B9A884F29E03444005874DD /* APIError.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -192,6 +226,7 @@
 		4BA7CB0129D77D1C00A954A7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4B9A884E29E0341C005874DD /* Error */,
 				4BDDC44F29E16CF20083A600 /* Notification */,
 				4BA7CB0229D77DD400A954A7 /* User */,
 			);
@@ -214,7 +249,6 @@
 			children = (
 				4B55DBF929D9AA26007B0BEB /* ImagePicker.swift */,
 				4B55DBFE29D9D184007B0BEB /* LottieAnimationWithFile.swift */,
-				4B8AAE5129DDAFC900757A75 /* DropdownView.swift */,
 				4B55DBF229D99C91007B0BEB /* PhotoURLLoadingView.swift */,
 				4B71025C29DEDAF5001E99F6 /* LoaderView.swift */,
 				4BA58B9C29DF427B007EEB2D /* PopoverTitleAndCloseView.swift */,
@@ -266,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				4BAEDDD629D70F100032ECB8 /* ProfileVIew.swift */,
+				4B70A99329E1D5D30016A9D3 /* ProfileAccountVIew.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -301,7 +336,6 @@
 				4B1E8AEB29DCC6E200F74C71 /* EnvironmentFile.swift */,
 				4BD905DE29D6AC23009FE5E5 /* diya_tila_iosApp.swift */,
 				4BD905E029D6AC23009FE5E5 /* ContentView.swift */,
-				4B71025E29DEDD58001E99F6 /* HexColor.swift */,
 				4BD905EC29D6B6ED009FE5E5 /* GoogleService-Info.plist */,
 				4BAEDDE729D746800032ECB8 /* Info.plist */,
 			);
@@ -436,16 +470,21 @@
 				4BAEDDD929D71DF80032ECB8 /* SignupView.swift in Sources */,
 				4B55DC0329D9F25E007B0BEB /* UserDataAuthProvider.swift in Sources */,
 				4B9A885229E0352C005874DD /* ErrorHandler.swift in Sources */,
+				4B70A99429E1D5D30016A9D3 /* ProfileAccountVIew.swift in Sources */,
 				4B55DBFF29D9D184007B0BEB /* LottieAnimationWithFile.swift in Sources */,
 				4BAEDDCA29D6CF4C0032ECB8 /* SessionStore.swift in Sources */,
-				4B8AAE5229DDAFC900757A75 /* DropdownView.swift in Sources */,
 				4BAEDDC629D6C9020032ECB8 /* MainView.swift in Sources */,
+				4B70A99729E1E4CB0016A9D3 /* ERRWithMessage.swift in Sources */,
+				4B70A9A529E1F8460016A9D3 /* FormFieldType.swift in Sources */,
 				4BA58B9D29DF427B007EEB2D /* PopoverTitleAndCloseView.swift in Sources */,
+				4B70A99F29E1F5730016A9D3 /* FormField.swift in Sources */,
 				4B213A4F29DB159C004E8ED3 /* NNImageClassification.swift in Sources */,
+				4B70A99929E1E5650016A9D3 /* FormFieldValidationError.swift in Sources */,
 				4B6E533A29DC805900A1AD37 /* UserDetails.swift in Sources */,
 				4BD905E129D6AC23009FE5E5 /* ContentView.swift in Sources */,
 				4BAEDDD729D70F100032ECB8 /* ProfileVIew.swift in Sources */,
 				4B42197F29DB59B2004E84D9 /* SqueezeNet.mlmodel in Sources */,
+				4B70A9A129E1F6600016A9D3 /* Form.swift in Sources */,
 				4B1E8AF029DCF41600F74C71 /* CombineDictionaries.swift in Sources */,
 				4BAEDDCD29D6CFCF0032ECB8 /* LogoutView.swift in Sources */,
 				4B55DBF629D9A702007B0BEB /* FBStorageDataProvider.swift in Sources */,
@@ -461,6 +500,7 @@
 				4BAEDDD429D706EF0032ECB8 /* AuthView.swift in Sources */,
 				4B213A5129DB19B6004E8ED3 /* NNImageCropAndScale.swift in Sources */,
 				4B9A885029E03444005874DD /* APIError.swift in Sources */,
+				4B70A9A329E1F82B0016A9D3 /* FormFields.swift in Sources */,
 				4B6E533829DC5D5D00A1AD37 /* FBDatabaseProvider.swift in Sources */,
 				4B55DBFA29D9AA26007B0BEB /* ImagePicker.swift in Sources */,
 				4BA7CB0029D77D1800A954A7 /* User.swift in Sources */,
