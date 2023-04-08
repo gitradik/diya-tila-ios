@@ -74,9 +74,9 @@ struct SignupView: View {
             
             // Button for registration
             Button(action: {
-                guard !name.isEmpty && !email.isEmpty && !passwd.isEmpty && image != nil else {
-                    return
-                }
+//                guard !name.isEmpty && !email.isEmpty && !passwd.isEmpty && image != nil else {
+//                    return
+//                }
                 
                 signUp(name, email, passwd, image)
             }){

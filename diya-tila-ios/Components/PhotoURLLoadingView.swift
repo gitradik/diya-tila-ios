@@ -7,7 +7,7 @@
 
 import SwiftUI
 import SwiftUIX
-// #4cfeb1
+
 struct PhotoURLLoadingView: View {
     let imageURL: URL
     let width: CGFloat

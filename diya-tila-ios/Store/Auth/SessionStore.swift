@@ -8,7 +8,7 @@
 import FirebaseAuth
 import GoogleSignIn
 
-class SessionStore : ObservableObject {
+class SessionStore: ObservableObject {
     let environment = EnvironmentFile.shared
     
     @Published var session: User?
@@ -41,6 +41,10 @@ class SessionStore : ObservableObject {
         self.isLoading = true
         
         userDataAuthProvider.signInWithGoogle { resultFbUser, error in
+            guard error == nil else {
+                self.isLoading = false
+                return
+            }
             guard let fbUser = resultFbUser else {
                 self.isLoading = false
                 return
@@ -101,7 +105,7 @@ class SessionStore : ObservableObject {
                     }
                     
                     var newUser = User(firebaseUser: fbUser)
-                    self.userDataAuthProvider.updatePhotoURL(url: URL(string: url)!) { updateResultFbUserPhotoURL, error in
+                    self.userDataAuthProvider.updatePhotoURL(url: url.data) { updateResultFbUserPhotoURL, error in
                         newUser.photoURL = updateResultFbUserPhotoURL?.photoURL
                         self.userDataAuthProvider.updateDisplayName(fullName: name) { updateResultFbUserDisplayName, error in
                             newUser.fullName = updateResultFbUserDisplayName?.displayName
@@ -115,14 +119,15 @@ class SessionStore : ObservableObject {
                     }
                 }
             case .failure(let error):
-                print("Error uploading image: \(error)")
+                ErrorHandler.handleAPIError(error)
                 self.isLoading = false
             }
         }
     }
     
     func signOut() {
-        userDataAuthProvider.signOut()
+        userDataAuthProvider.signOut { result, error in
+        }
     }
     
     private func addUserUniqueName(user: User, completion: @escaping (User?, Error?) -> Void) {
