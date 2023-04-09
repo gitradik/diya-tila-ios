@@ -10,14 +10,8 @@ import SwiftUI
 struct ProfileView: View {
     let sessionStore: SessionStore
     
-    @State private var count = 0
-    
     @State private var showSignup = false
     @State private var showAccountList = false
-    @State private var form = Form(fields: [
-        FormField(type: .text, defaultValue: "", label: "Full Name", placeholder: "", validationRules: [.required]),
-        FormField(type: .number, defaultValue: "", label: "Phone", placeholder: "", validationRules: [.required]),
-    ])
     
     @StateObject var notificationStore = NotificationStore.shared
     
@@ -31,25 +25,12 @@ struct ProfileView: View {
                 ProfileAccountView(list: [user], selected: user, select: { selected in
                     print(selected)
                 }) {
-//                    NotificationStore.shared.showNotification(title: "Hello Guy", message: "Dada jkhsdjk h sadh aj", duration: 10)
                     self.showSignup.toggle()
                 }
                 
                 PhotoURLLoadingView(imageURL: photoURL, width: 100, height: 100)
                 Text("@\(uniqueUsername)")
                 Divider()
-                Spacer()
-                
-                VStack {
-                    form.renderFields()
-                }
-                
-                Button(action: {
-                    count += 1
-                    notificationStore.showNotification(title: "Заголовок уведомления " + String(count), message: "Текст уведомления", duration: Double.random(in: 3...7))
-                }, label: {
-                    Text("Click")
-                })
                 Spacer()
             }
         }

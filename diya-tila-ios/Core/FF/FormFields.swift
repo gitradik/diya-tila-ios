@@ -11,54 +11,68 @@ import Combine
 class FormFields: ObservableObject {
     @Published var fields: [FormField] = []
     
-    func addField(_ field: FormField) {
-        fields.append(field)
+    func addField(_ ff: FormField) {
+        fields.append(ff)
     }
     
     func renderField(ff: FormField) -> some View {
-        switch ff.type {
+        VStack {
+            Text(ff.label ?? "")
+            switch ff.type {
+            case .text:
+                AnyView(TextField(ff.placeholder ?? "", text: .init(get: { ff.value! }, set: ff.handleChangeValue))
+                                .keyboardType(keyboardType(for: ff.type)))
+            case .number:
+                AnyView(TextField(ff.placeholder ?? "", text: .init(get: { ff.value! }, set: ff.handleChangeValue))
+                                .keyboardType(keyboardType(for: ff.type)))
+            case .email:
+                AnyView(TextField(ff.placeholder ?? "", text: .init(get: { ff.value! }, set: ff.handleChangeValue))
+                                .keyboardType(keyboardType(for: ff.type)))
+            case .password:
+                AnyView(SecureField(ff.placeholder ?? "", text: .init(get: { ff.value! }, set: ff.handleChangeValue))
+                                .keyboardType(keyboardType(for: ff.type)))
+            case .checkbox:
+                AnyView(
+                    Toggle(isOn: .init(get: { ff.isOnValue! }, set: ff.handleChangeIsOnValue), label: {
+                        Text(ff.placeholder ?? "")
+                    }))
+            case .date:
+                AnyView(
+                    DatePicker(ff.placeholder ?? "", selection: .init(get: { ff.dateValue! }, set: ff.handleChangeDateValue), displayedComponents: .date)
+                )
+            case .switch_:
+                AnyView(
+                    Toggle(isOn: .init(get: { ff.isOnValue! }, set: ff.handleChangeIsOnValue)) {
+                        Text(ff.placeholder ?? "")
+                    }
+                    .toggleStyle(SwitchToggleStyle(tint: .blue)) // Можно настроить цвет переключателя
+                )
+            case .slider:
+                AnyView(
+                    Slider(value: .init(get: { ff.doubleValue! }, set: ff.handleChangeDoubleValue), in: ff.minValue!...ff.maxValue!, step: ff.stepValue!)
+                        .accentColor(.blue) // Можно настроить цвет ползунка
+                )
+            default:
+                AnyView(EmptyView())
+            }
+        }
+    }
+
+    private func keyboardType(for ffType: FormFieldType) -> UIKeyboardType {
+        switch ffType {
         case .text:
-            return renderTextField(formField: ff).eraseToAnyView()
+            return .default
         case .number:
-            return renderNumberField(formField: ff).eraseToAnyView()
+            return .numberPad
         case .email:
-            return renderEmailFields().eraseToAnyView()
+            return .emailAddress
         case .password:
-            return renderEmailFields().eraseToAnyView()
-        case .checkbox:
-            return renderEmailFields().eraseToAnyView()
-        case .date:
-            return renderEmailFields().eraseToAnyView()
-        case .dropdown:
-            return renderEmailFields().eraseToAnyView()
-        case .switch_:
-            return renderEmailFields().eraseToAnyView()
-        case .radio:
-            return renderEmailFields().eraseToAnyView()
-        case .slider:
-            return renderEmailFields().eraseToAnyView()
+            return .default
+        default:
+            return .default
         }
     }
-    
-    private func renderTextField(formField: FormField) -> some View {
-        VStack {
-            Text(formField.label ?? "")
-            TextField(formField.placeholder ?? "", text: .init(get: { formField.value }, set: formField.handleChange))
-        }
-    }
-    
-    func renderNumberField(formField: FormField) -> some View {
-        VStack {
-            Text(formField.label ?? "")
-            TextField(formField.placeholder ?? "", text: .init(get: { formField.value }, set: formField.handleChange))
-                        .keyboardType(.numberPad)
-        }
-       
-    }
-    
-    func renderEmailFields() -> some View {
-        EmptyView()
-    }
+
 }
 
 

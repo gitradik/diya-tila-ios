@@ -17,10 +17,13 @@ struct ProfileAccountView: View {
     
     var body: some View {
         VStack {
-            Button(action: {
-                self.isPresent.toggle()
-            }) {
+            HStack {
                 Text(selected.fullName!)
+                Image("ArrowDown")
+                    .resizable()
+                    .frame(width: 18, height: 18)
+            }.onTapGesture {
+                self.isPresent.toggle()
             }
             .popover(isPresented: $isPresent) {
                 PopoverTitleAndCloseView(title: "Change account", isPresent: self.$isPresent)

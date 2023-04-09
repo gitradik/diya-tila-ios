@@ -198,9 +198,9 @@
 			isa = PBXGroup;
 			children = (
 				4B70A9A429E1F8460016A9D3 /* FormFieldType.swift */,
+				4B70A9A229E1F82B0016A9D3 /* FormFields.swift */,
 				4B70A99E29E1F5730016A9D3 /* FormField.swift */,
 				4B70A9A029E1F6600016A9D3 /* Form.swift */,
-				4B70A9A229E1F82B0016A9D3 /* FormFields.swift */,
 			);
 			path = FF;
 			sourceTree = "<group>";
