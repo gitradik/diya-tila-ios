@@ -9,30 +9,28 @@ import SwiftUI
 
 struct PopoverTitleAndCloseView: View {
     let title: String
-    @Binding var isShow: Bool
+    @Binding var isPresent: Bool
     
     var body: some View {
         VStack {
             HStack {
-                Spacer().frame(width: 50)
+                Spacer().maxWidth(50)
                 Spacer().overlay(Group {
                     Text(title)
                 }, alignment: .center)
                 Spacer().overlay(Group {
                     VStack {
                         Button(action: {
-                            isShow.toggle()
+                            isPresent.toggle()
                         }, label: {
                             Image(systemName: "xmark")
                         }).foregroundColor(.black)
                     }
-                }, alignment: .trailing)
-                .frame(width: 50)
+                }, alignment: .trailing).maxWidth(50)
             }
             .scenePadding(.vertical)
         }
-        .padding(.top, 5)
-        .padding(.leading, 7)
-        .padding(.trailing, 7)
+        .padding(.top)
+        .padding(.horizontal)
     }
 }

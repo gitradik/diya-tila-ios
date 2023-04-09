@@ -1,17 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "icons8-expand-arrow-30.png",
+      "filename" : "icons8-add-50.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icons8-expand-arrow-60.png",
+      "filename" : "icons8-add-100.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icons8-expand-arrow-90.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
