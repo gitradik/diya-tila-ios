@@ -9,16 +9,14 @@ import SwiftUI
 import SwiftUIX
 
 struct SignupView: View {
-    let signUp: ((_ name: String, _ email: String, _ passwd: String, _ image: UIImage?) -> Void)
+    let signUp: (_ name: String, _ email: String, _ password: String, _ image: UIImage?) -> Void
     let signUpGoogle: () -> Void
     
     @State var selectedImage: UIImage?
     @State var showingImagePicker = false
-    
-    @State private var name: String = ""
-    @State private var passwd: String = ""
-    @State private var email: String = ""
     @State var image: UIImage?
+    
+    private let passwordField = FormField(type: .password, name: "password", defaultValue: "", placeholder: "Password:", validationRules: [.required, .password])
     
     let photoSize = (width: CGFloat(120), height: CGFloat(120))
     
@@ -52,9 +50,9 @@ struct SignupView: View {
                             Spacer()
                             HStack {
                                 Spacer()
-                                Image("Plus")
-                                    .sizeToFit(width: 30, height: 30)
-                                    .overlay(Circle().stroke(Color.secondaryColor, lineWidth: 3))
+                                Image(systemName: "plus")
+                                    .sizeToFit(width: 20, height: 20)
+                                    .overlay(Circle().stroke(Color.primaryColor, lineWidth: 3))
                                     .onTapGesture {
                                         self.showingImagePicker = true
                                     }
@@ -65,30 +63,24 @@ struct SignupView: View {
                 }
             }.scenePadding(.bottom)
             
-            TextField("Full Name", text: $name)
-                .textFieldStyle(.roundedBorder)
-            TextField("Email", text: $email)
-                .textFieldStyle(.roundedBorder)
-            SecureField("Password", text: $passwd)
-                .textFieldStyle(.roundedBorder)
-            
-            // Button for registration
-            Button(action: {
-//                guard !name.isEmpty && !email.isEmpty && !passwd.isEmpty && image != nil else {
-//                    return
-//                }
+            Form(fields: [
+                FormField(type: .text, name: "fullName", defaultValue: "", placeholder: "Full name:", validationRules: [.required]),
+                FormField(type: .email, name: "email", defaultValue: "", placeholder: "Email:", validationRules: [.required, .email]),
+                passwordField,
+                FormField(type: .password, name: "confirmPassword", defaultValue: "", placeholder: "Confirm password:", validationRules: [.required, .password, .custom({ value in
+                    passwordField.value == value
+                })])
+            ], submitButtonLabel: "Sign Up") { fields in
+                guard let image = image else {
+                    return
+                }
                 
-                signUp(name, email, passwd, image)
-            }){
-                Text("Register")
-                    .padding(12)
-                    .border(Color.primaryColor)
-            }
-            .frame(minWidth: 0, maxWidth: .infinity)
-            .foregroundColor(.white)
-            .background(Color.primaryColor)
-            .cornerRadius(10)
-            .scenePadding(.bottom)
+                if let fullNameValue = fields["fullName"]?.value,
+                    let emailValue = fields["email"]?.value,
+                   let passwordValue = fields["password"]?.value {
+                    signUp(fullNameValue, emailValue, passwordValue, image)
+                }
+            }.scenePadding(.bottom)
             
             OAuthSignInWithGoogleButton(buttonText: Text("Register with Google")) {
                 signUpGoogle()

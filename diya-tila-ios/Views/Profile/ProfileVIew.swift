@@ -11,9 +11,9 @@ struct ProfileView: View {
     let sessionStore: SessionStore
     
     @State private var showSignup = false
-    @State private var showAccountList = false
     
     @StateObject var notificationStore = NotificationStore.shared
+    
     
     var body: some View {
         VStack {
@@ -31,9 +31,8 @@ struct ProfileView: View {
                 PhotoURLLoadingView(imageURL: photoURL, width: 100, height: 100)
                 Text("@\(uniqueUsername)")
                 Divider()
-                Spacer()
             }
-        }
+        }.padding(.horizontal)
         .sheet(isPresented: self.$showSignup) {
             PopoverTitleAndCloseView(title: "Add account", isPresent: self.$showSignup)
             SignupView() { name, email, passwd, image in

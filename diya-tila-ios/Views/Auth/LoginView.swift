@@ -10,30 +10,21 @@ import Firebase
 import FirebaseAuth
 
 struct LoginView: View {
-    let logIn: ((_ email: String, _ passwd: String) -> Void)?
-    
-    @State private var email: String = ""
-    @State private var passwd: String = ""
+    let login: ((_ email: String, _ passwd: String) -> Void)
     
     var body: some View {
         VStack {
-            TextField("Email", text: $email)
-                .textFieldStyle(.roundedBorder)
-            SecureField("Password", text: $passwd)
-                .textFieldStyle(.roundedBorder)
-            Button(action: {
-                if let fn = logIn {
-                    fn(email, passwd)
+            Image("Logo").sizeToFit().frame(width: 170, height: 170)
+            
+            Form(fields: [
+                FormField(type: .email, name: "email", defaultValue: "", placeholder: "Email:", validationRules: [.required, .email]),
+                FormField(type: .password, name: "password", defaultValue: "", placeholder: "Password:", validationRules: [.required, .password])
+            ], submitButtonLabel: "Sign In") { fields in
+                if let emailValue = fields["email"]?.value,
+                   let passwordValue = fields["password"]?.value {
+                    login(emailValue, passwordValue)
                 }
-            }) {
-                Text("Sign in")
-                    .padding(12)
-                    .border(Color.primaryColor)
             }
-            .frame(minWidth: 0, maxWidth: .infinity)
-            .foregroundColor(.white)
-            .background(Color.primaryColor)
-            .cornerRadius(10)
         }
     }
 }

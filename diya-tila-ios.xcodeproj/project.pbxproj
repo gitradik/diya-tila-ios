@@ -30,7 +30,7 @@
 		4B70A9A529E1F8460016A9D3 /* FormFieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B70A9A429E1F8460016A9D3 /* FormFieldType.swift */; };
 		4B71025B29DEDA6E001E99F6 /* Wait.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B71025A29DEDA6E001E99F6 /* Wait.json */; };
 		4B71025D29DEDAF5001E99F6 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71025C29DEDAF5001E99F6 /* LoaderView.swift */; };
-		4B71025F29DEDD58001E99F6 /* HexColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71025E29DEDD58001E99F6 /* HexColor.swift */; };
+		4B71025F29DEDD58001E99F6 /* HexColor.extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B71025E29DEDD58001E99F6 /* HexColor.extension.swift */; };
 		4B9A885029E03444005874DD /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A884F29E03444005874DD /* APIError.swift */; };
 		4B9A885229E0352C005874DD /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A885129E0352C005874DD /* ErrorHandler.swift */; };
 		4B9A885529E0379F005874DD /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9A885429E0379F005874DD /* APIResponse.swift */; };
@@ -88,7 +88,7 @@
 		4B70A9A429E1F8460016A9D3 /* FormFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormFieldType.swift; sourceTree = "<group>"; };
 		4B71025A29DEDA6E001E99F6 /* Wait.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Wait.json; sourceTree = "<group>"; };
 		4B71025C29DEDAF5001E99F6 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
-		4B71025E29DEDD58001E99F6 /* HexColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.swift; sourceTree = "<group>"; };
+		4B71025E29DEDD58001E99F6 /* HexColor.extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColor.extension.swift; sourceTree = "<group>"; };
 		4B9A884F29E03444005874DD /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		4B9A885129E0352C005874DD /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		4B9A885429E0379F005874DD /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
@@ -162,7 +162,7 @@
 				4B70A99B29E1F0E60016A9D3 /* FF */,
 				4B1E8AED29DCE45F00F74C71 /* FB */,
 				4B213A4D29DB1563004E8ED3 /* NN */,
-				4B71025E29DEDD58001E99F6 /* HexColor.swift */,
+				4B71025E29DEDD58001E99F6 /* HexColor.extension.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -506,7 +506,7 @@
 				4BA7CB0029D77D1800A954A7 /* User.swift in Sources */,
 				4BD905DF29D6AC23009FE5E5 /* diya_tila_iosApp.swift in Sources */,
 				4B71025D29DEDAF5001E99F6 /* LoaderView.swift in Sources */,
-				4B71025F29DEDD58001E99F6 /* HexColor.swift in Sources */,
+				4B71025F29DEDD58001E99F6 /* HexColor.extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

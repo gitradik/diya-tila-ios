@@ -8,57 +8,78 @@
 import SwiftUI
 import Combine
 
-class FormFields: ObservableObject {
-    @Published var fields: [FormField] = []
+class FormFields {
     
-    func addField(_ ff: FormField) {
-        fields.append(ff)
-    }
-    
-    func renderField(ff: FormField) -> some View {
+    static func renderField(ff: FormField) -> some View {
         VStack {
             Text(ff.label ?? "")
+                .frame(maxWidth: .infinity, alignment: .leading)
             switch ff.type {
             case .text:
-                AnyView(TextField(ff.placeholder ?? "", text: .init(get: { ff.value! }, set: ff.handleChangeValue))
-                                .keyboardType(keyboardType(for: ff.type)))
+                TextField(ff.placeholder ?? "", text: .init(get: { ff.value! }, set: ff.handleChangeValue))
+                    .keyboardType(keyboardType(for: ff.type))
+                    .padding(.vertical, 7)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 0)
+                            .foregroundColor(ff.isValid ? Color.secondaryColor : Color.errorColor)
+                            .frame(height: 1)
+                            , alignment: .bottom
+                    )
             case .number:
-                AnyView(TextField(ff.placeholder ?? "", text: .init(get: { ff.value! }, set: ff.handleChangeValue))
-                                .keyboardType(keyboardType(for: ff.type)))
+                TextField(ff.placeholder ?? "", text: .init(get: { ff.value! }, set: ff.handleChangeValue))
+                    .keyboardType(keyboardType(for: ff.type))
+                    .padding(.vertical, 7)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 0)
+                            .foregroundColor(ff.isValid ? Color.secondaryColor : Color.errorColor)
+                            .frame(height: 1)
+                            , alignment: .bottom
+                    )
             case .email:
-                AnyView(TextField(ff.placeholder ?? "", text: .init(get: { ff.value! }, set: ff.handleChangeValue))
-                                .keyboardType(keyboardType(for: ff.type)))
+                TextField(ff.placeholder ?? "", text: .init(get: { ff.value! }, set: ff.handleChangeValue))
+                    .keyboardType(keyboardType(for: ff.type))
+                    .padding(.vertical, 7)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 0)
+                            .foregroundColor(ff.isValid ? Color.secondaryColor : Color.errorColor)
+                            .frame(height: 1)
+                            , alignment: .bottom
+                    )
             case .password:
-                AnyView(SecureField(ff.placeholder ?? "", text: .init(get: { ff.value! }, set: ff.handleChangeValue))
-                                .keyboardType(keyboardType(for: ff.type)))
+                SecureField(ff.placeholder ?? "", text: .init(get: { ff.value! }, set: ff.handleChangeValue))
+                    .padding(.vertical, 7)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 0)
+                            .foregroundColor(ff.isValid ? Color.secondaryColor : Color.errorColor)
+                            .frame(height: 1)
+                            , alignment: .bottom
+                    )
+                
+                // MARK: this shoud be with styles
             case .checkbox:
-                AnyView(
-                    Toggle(isOn: .init(get: { ff.isOnValue! }, set: ff.handleChangeIsOnValue), label: {
-                        Text(ff.placeholder ?? "")
-                    }))
+                Toggle(isOn: .init(get: { ff.isOnValue! }, set: ff.handleChangeValue), label: {
+                    Text(ff.placeholder ?? "")
+                })
             case .date:
-                AnyView(
-                    DatePicker(ff.placeholder ?? "", selection: .init(get: { ff.dateValue! }, set: ff.handleChangeDateValue), displayedComponents: .date)
-                )
+                DatePicker(ff.placeholder ?? "", selection: .init(get: { ff.dateValue! }, set: ff.handleChangeValue), displayedComponents: .date)
             case .switch_:
-                AnyView(
-                    Toggle(isOn: .init(get: { ff.isOnValue! }, set: ff.handleChangeIsOnValue)) {
-                        Text(ff.placeholder ?? "")
-                    }
-                    .toggleStyle(SwitchToggleStyle(tint: .blue)) // Можно настроить цвет переключателя
-                )
+                Toggle(isOn: .init(get: { ff.isOnValue! }, set: ff.handleChangeValue)) {
+                    Text(ff.placeholder ?? "")
+                }
+                .toggleStyle(SwitchToggleStyle(tint: .blue))
             case .slider:
-                AnyView(
-                    Slider(value: .init(get: { ff.doubleValue! }, set: ff.handleChangeDoubleValue), in: ff.minValue!...ff.maxValue!, step: ff.stepValue!)
-                        .accentColor(.blue) // Можно настроить цвет ползунка
-                )
+                Slider(value: .init(get: { ff.doubleValue! }, set: ff.handleChangeValue), in: ff.minValue!...ff.maxValue!, step: ff.stepValue!)
+                    .accentColor(.blue)
             default:
-                AnyView(EmptyView())
+                EmptyView()
             }
+            
+            Text(ff.errorMessage)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
-
-    private func keyboardType(for ffType: FormFieldType) -> UIKeyboardType {
+    
+    static func keyboardType(for ffType: FormFieldType) -> UIKeyboardType {
         switch ffType {
         case .text:
             return .default
@@ -72,12 +93,5 @@ class FormFields: ObservableObject {
             return .default
         }
     }
-
-}
-
-
-extension View {
-    func eraseToAnyView() -> AnyView {
-        AnyView(self)
-    }
+    
 }

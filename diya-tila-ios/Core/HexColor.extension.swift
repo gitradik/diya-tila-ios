@@ -8,8 +8,9 @@
 import SwiftUI
 
 extension Color {
-    static let primaryColor: Color = Color(hex: 0x4B94F5)
-    static let secondaryColor: Color = Color(hex: 0x000000)
+    static let primaryColor: Color = Color(hex: 0xff2d55)
+    static let secondaryColor: Color = Color(hex: 0x17181D)
+    static let errorColor: Color = Color(hex: 0xf76754)
     
     init(hex: UInt, opacity: Double = 1.0) {
         let red = Double((hex >> 16) & 0xff) / 255.0
